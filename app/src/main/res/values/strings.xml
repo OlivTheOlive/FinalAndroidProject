@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fayz\'s Android Labs</string>
+    <string name="button_message">Aviation Stack Flight Tracker</string>
+    <string name="button2_message">Currency Converter</string>
+    <string name="button3_message">Trivia Question Database</string>
+    <string name="button4_message">Bear Image Generator</string>
+</resources>
