@@ -19,8 +19,10 @@ public class AviationTrackerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAviationTrackerBinding.inflate(getLayoutInflater());
 
+
+        binding = ActivityAviationTrackerBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         binding.button.setOnClickListener(click ->{
             String typed = binding.editTextText.getText().toString();
 
@@ -35,6 +37,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
         int counter = 0;
         char c;
         if (cd.length() != 3) {
+            Toast.makeText(this, "Code is not valid, 3 letters please", duration).show();
             return false;
         } else {
             for (int i = 0; i < cd.length(); i++) {
