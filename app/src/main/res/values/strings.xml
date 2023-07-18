@@ -4,4 +4,6 @@
     <string name="button2_message">Currency Converter</string>
     <string name="button3_message">Trivia Question Database</string>
     <string name="button4_message">Bear Image Generator</string>
+    <string name="get_flight_btn">Get Data</string>
+    <string name="edit_aviation">3 letter code pls</string>
 </resources>
