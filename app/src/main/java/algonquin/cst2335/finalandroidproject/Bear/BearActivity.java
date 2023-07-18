@@ -31,34 +31,31 @@ public class BearActivity extends AppCompatActivity {
         EditText hET = binding.heightEditText;
         EditText wET = binding.widthEditText;
         SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        String savedHeight = prefs.getString("Height","");
-        String savedWidth = prefs.getString("Width","");
+        String savedHeight = prefs.getString("Height", "");
+        String savedWidth = prefs.getString("Width", "");
         hET.setText(savedHeight);
         wET.setText(savedWidth);
 
 
         messageText = binding.titleText;
-        binding.generateButton.setOnClickListener(clk ->{
+        binding.generateButton.setOnClickListener(clk -> {
             String height = hET.getText().toString();
             String width = wET.getText().toString();
             SharedPreferences.Editor editor = prefs.edit();
             editor
-                    .putString("Height",height)
-                    .putString("Width",width)
+                    .putString("Height", height)
+                    .putString("Width", width)
                     .apply();
-            Toast.makeText(this, "Bear Image Size: " + height + "x" + width , Toast.LENGTH_SHORT).show();
-            AlertDialog.Builder builder = new AlertDialog.Builder( BearActivity.this );
-            builder.setMessage("Do you want to save this image? " )
+            Toast.makeText(this, "Bear Image Size: " + width + "x" + height, Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(BearActivity.this);
+            builder.setMessage("Do you want to save this image? ")
                     .setTitle("Question:")
-                    .setNegativeButton("No", (dialog,cl) ->{})
-                    .setPositiveButton("Yes", (dialog,cl) ->{
-                        Snackbar.make(messageText,"Image Saved", Snackbar.LENGTH_LONG).setAction("Undo", click -> {
+                    .setNegativeButton("No", (dialog, cl) -> {
+                    })
+                    .setPositiveButton("Yes", (dialog, cl) -> {
+                        Snackbar.make(messageText, "Image Saved", Snackbar.LENGTH_LONG).setAction("Undo", click -> {
                         }).show();
                     }).create().show();
         });
-
-
-
-
-}
+    }
 }
