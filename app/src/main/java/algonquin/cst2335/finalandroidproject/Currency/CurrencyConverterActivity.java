@@ -1,17 +1,14 @@
 package algonquin.cst2335.finalandroidproject.Currency;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewbinding.ViewBinding;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityCurrencyConverterBinding;
-import algonquin.cst2335.finalandroidproject.databinding.ActivityMainBinding;
 
 public class CurrencyConverterActivity extends AppCompatActivity {
 
@@ -26,13 +23,20 @@ public class CurrencyConverterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //Toast for converter button
-        binding.button.setOnClickListener( click -> {
-                Toast.makeText(this, "Amount Converted", Toast.LENGTH_LONG).show();
+        binding.button.setOnClickListener(v -> {
+            String inputType = binding.editTextText.getText().toString();
+            String inputType2 = binding.editTextText2.getText().toString();
+            String inputType3 = binding.editTextText3.getText().toString();
+
+
+                Toast.makeText(getApplicationContext(), "Amount Converted is " + inputType,+ Toast.LENGTH_LONG).show();
+
+                Toast.makeText(getApplicationContext(), "Amount Converted is " + inputType2,+ Toast.LENGTH_LONG).show();
+
+                Toast.makeText(getApplicationContext(), "Amount Converted is " + inputType3,+ Toast.LENGTH_LONG).show();
+
         });
 
-
-
-        setContentView(R.layout.activity_currency_converter);
     }
 
 

@@ -55,7 +55,7 @@
       android:layout_marginStart="20dp"
       android:ems="10"
       android:hint="@string/txt_edit1"
-      android:inputType="text"
+      android:inputType="numberDecimal"
       app:layout_constraintBottom_toBottomOf="@+id/textView"
       app:layout_constraintStart_toEndOf="@+id/textView"
       app:layout_constraintTop_toTopOf="@+id/textView"
