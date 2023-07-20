@@ -4,7 +4,9 @@
     <string name="button2_message">Currency Converter</string>
     <string name="button3_message">Trivia Question Database</string>
     <string name="button4_message">Bear Image Generator</string>
-
+    <string name="textView">Select Number Of Questions</string>
+    <string name="editTextNumber">enter a number between 1-50 </string>
+    <string name="button">Generate Question</string>
     <string name="convert_button">Convert</string>
     <string name="txt1">CAD</string>
     <string name="txt2">FF</string>
