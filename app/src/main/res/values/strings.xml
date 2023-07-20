@@ -1,7 +1,22 @@
 <resources>
-    <string name="app_name">Fayz\'s Android Labs</string>
+    <string name="app_name">Final Project</string>
     <string name="button_message">Aviation Stack Flight Tracker</string>
     <string name="button2_message">Currency Converter</string>
     <string name="button3_message">Trivia Question Database</string>
     <string name="button4_message">Bear Image Generator</string>
+    <string name="textView">Select Number Of Questions</string>
+    <string name="editTextNumber">enter a number between 1-50 </string>
+    <string name="button">Generate Question</string>
+    <string name="convert_button">Convert</string>
+    <string name="txt1">CAD</string>
+    <string name="txt2">FF</string>
+    <string name="txt3">PHP</string>
+    <string name="txt_edit1">Enter Amount</string>
+    <string name="txt_edit2">Enter Amount</string>
+    <string name="txt_edit3">Enter Amount</string>
+    <string name="bear_title">Generate Bear Image</string>
+    <string name="height">Height</string>
+    <string name="width">Width</string>
+    <string name="get_flight_btn">Get Data</string>
+    <string name="edit_aviation">3 letter code pls</string>
 </resources>

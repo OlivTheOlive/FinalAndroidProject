@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Les laboratoires Android de Fayz</string>
+    <string name="button_message">Suivi de vol de pile d\'aviation</string>
+    <string name="button2_message">Base de données de questions triviales</string>
+    <string name="button3_message">Trivia Question Database</string>
+    <string name="button4_message">Générer une image d\'ours</string>
+    <string name="bear_title">Generate Bear Image</string>
+    <string name="height">Hauteur</string>
+    <string name="width">Largeur</string>
+</resources>
