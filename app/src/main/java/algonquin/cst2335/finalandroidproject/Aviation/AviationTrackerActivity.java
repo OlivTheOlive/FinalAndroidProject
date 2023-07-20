@@ -44,18 +44,20 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        sharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
-//        String savedCode = sharedPreferences.getString(REQ_CODE,"");
-//        binding.editTextText.setText(savedCode);
 
         super.onCreate(savedInstanceState);
-
+        binding = ActivityAviationTrackerBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
 
         AviationTrackerViewModel ATViewModel = new ViewModelProvider(this).get(AviationTrackerViewModel.class);
         requests = ATViewModel.requests.getValue();
         FlightRequestDB db = Room.databaseBuilder(getApplicationContext(), FlightRequestDB.class, "FlightReqDB").build();
         DAO = db.frDAO();
+
+
+
+
         if (requests == null) {
 
             ATViewModel.requests.setValue(requests = new ArrayList<>());
@@ -65,30 +67,26 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 requests.addAll(DAO.getAllMessage());
                 runOnUiThread(() -> binding.recycleView.setAdapter(myAdapter));
             });
-
         }
-
+        //Sharedpref
         sharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
         String savedCode = sharedPreferences.getString(REQ_CODE,"");
         binding.editTextText.setText(savedCode);
-        binding = ActivityAviationTrackerBinding.inflate(getLayoutInflater());
 
-
-        setContentView(binding.getRoot());
         binding.button.setOnClickListener(click ->{
             String typed = binding.editTextText.getText().toString();
             newReq = new FlightRequest(typed);
             if(checkCode(typed)){
                 requests.add(newReq);
                 myAdapter.notifyItemInserted(requests.size()-1);
-                binding.editTextText.setText("");
+
                 Executor thread = Executors.newSingleThreadExecutor();
                 thread.execute(() -> newReq.id = (int) DAO.insertCode(newReq));
 
-                String code = binding.editTextText.getText().toString();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(REQ_CODE,code);
+                editor.putString(REQ_CODE,typed);
                 editor.apply();
+                binding.editTextText.setText("");
             }
         });
 
@@ -114,7 +112,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
             public int getItemCount() {
                 return requests.size();
             }
-            
+
         });
     }
 
