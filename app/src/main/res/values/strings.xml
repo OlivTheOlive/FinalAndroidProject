@@ -4,6 +4,14 @@
     <string name="button2_message">Currency Converter</string>
     <string name="button3_message">Trivia Question Database</string>
     <string name="button4_message">Bear Image Generator</string>
+
+    <string name="convert_button">Convert</string>
+    <string name="txt1">CAD</string>
+    <string name="txt2">FF</string>
+    <string name="txt3">PHP</string>
+    <string name="txt_edit1">Enter Amount</string>
+    <string name="txt_edit2">Enter Amount</string>
+    <string name="txt_edit3">Enter Amount</string>
     <string name="bear_title">Generate Bear Image</string>
     <string name="height">Height</string>
     <string name="width">Width</string>
