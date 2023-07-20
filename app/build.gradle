@@ -5,6 +5,7 @@ plugins {
 android {
     namespace 'algonquin.cst2335.finalandroidproject'
     compileSdk 33
+
     buildFeatures {
         viewBinding true
     }
