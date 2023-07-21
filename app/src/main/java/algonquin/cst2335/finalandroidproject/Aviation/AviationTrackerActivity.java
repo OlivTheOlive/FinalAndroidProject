@@ -27,7 +27,6 @@ import algonquin.cst2335.finalandroidproject.Aviation.DAO.FlightRequestDAO;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.AviationTrackerViewModel;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.FlightRequest;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.FlightRequestDB;
-import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityAviationTrackerBinding;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityGetFlightDataBinding;
 
@@ -55,11 +54,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
         FlightRequestDB db = Room.databaseBuilder(getApplicationContext(), FlightRequestDB.class, "FlightReqDB").build();
         DAO = db.frDAO();
 
-
-
-
         if (requests == null) {
-
             ATViewModel.requests.setValue(requests = new ArrayList<>());
             Executor thread = Executors.newSingleThreadExecutor();
             thread.execute(() ->
@@ -112,7 +107,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
             public int getItemCount() {
                 return requests.size();
             }
-
         });
     }
 
@@ -132,7 +126,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
                     counter++;
                 }
             }
-
         }
         if(cd.length() - counter == 3){
             Toast.makeText(this, "Code checks out", duration).show();
@@ -170,7 +163,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
                         })
                         .create().show();
             });
-            codeText = itemView.findViewById(R.id.textView2);
         }
 
 
