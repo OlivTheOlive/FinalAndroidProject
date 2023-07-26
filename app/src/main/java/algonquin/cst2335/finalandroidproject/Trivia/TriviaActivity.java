@@ -3,12 +3,19 @@ package algonquin.cst2335.finalandroidproject.Trivia;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 
+import algonquin.cst2335.finalandroidproject.Aviation.AviationTrackerActivity;
+import algonquin.cst2335.finalandroidproject.Bear.BearActivity;
+import algonquin.cst2335.finalandroidproject.Currency.CurrencyConverterActivity;
+import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityTriviaBinding;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
@@ -25,7 +32,6 @@ public class TriviaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         variableBinding = ActivityTriviaBinding.inflate(getLayoutInflater());
         setContentView(variableBinding.getRoot());
-
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -56,7 +62,7 @@ public class TriviaActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     View view = findViewById(android.R.id.content);
-                   String message = "Why did you cancel :(";
+                    String message = "Why did you cancel :(";
                     int duration = Snackbar.LENGTH_SHORT;
                     Snackbar snackbar = Snackbar.make(view, message, duration);
                     snackbar.show();
@@ -71,5 +77,13 @@ public class TriviaActivity extends AppCompatActivity {
         // Retrieve saved user input and populate the EditText
         String savedUserInput = sharedPreferences.getString("userInputKey", "");
         variableBinding.editTextNumber.setText(savedUserInput);
+
     }
-}
+
+
+
+
+
+
+
+    }

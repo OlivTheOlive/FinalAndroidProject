@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bear1"
+        android:icon="@drawable/bear_generator_icon"
+        android:title="@string/bear_title"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/aviation1"
+        android:icon="@drawable/aviation_tracker_img"
+        android:title="@string/edit_aviation"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/trivia1"
+        android:icon="@drawable/trivia_generator"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/currency_converter_1"
+        android:icon="@drawable/currency_converator_image"
+        android:title="Item"
+        app:showAsAction="always" />
+</menu>
