@@ -7,6 +7,7 @@
         android:icon="@drawable/bear_generator_icon"
         android:title="@string/bear_title"
         app:showAsAction="always" />
+
     <item
         android:id="@+id/aviation1"
         android:icon="@drawable/aviation_tracker_img"
