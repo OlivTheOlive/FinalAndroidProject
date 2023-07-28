@@ -5,7 +5,17 @@
     <string name="button2_message">Base de données de questions triviales</string>
     <string name="button3_message">Trivia Question Database</string>
     <string name="button4_message">Générer une image d\'ours</string>
-    <string name="bear_title">Generate Bear Image</string>
+    <string name="bear_title">Générer une image d\'ours</string>
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
+    <string name="do_save">Voulez-vous enregistrer cette image ?</string>
+    <string name="question">Question:</string>
+    <string name="no">Non</string>
+    <string name="yes">Oui</string>
+    <string name="img_save">Image enregistrée</string>
+    <string name="bear_help">Entrez la hauteur souhaitée et générez ensuite une image d\'ours. Cliquez sur l\'image pour l\'enregistrer sur votre appareil.</string>
+    <string name="help">AIDER</string>
+    <string name="done">Fait</string>
+    <string name="bear_size">Taille de l\'image de l\'ours: </string>
+    <string name="undo">Annuler</string>
 </resources>

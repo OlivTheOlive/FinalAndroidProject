@@ -15,8 +15,18 @@
     <string name="txt_edit2">Enter Amount</string>
     <string name="txt_edit3">Enter Amount</string>
     <string name="bear_title">Generate Bear Image</string>
+    <string name="question">Question:</string>
+    <string name="do_save">Do you want to save this image?</string>
     <string name="height">Height</string>
     <string name="width">Width</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="img_save">Image Saved</string>
+    <string name="bear_help">Enter desired height and with then generate bear image. Click on the image to save it to your device.</string>
+    <string name="help">HELP</string>
+    <string name="done">Done</string>
+    <string name="bear_size">Bear Image Size: </string>
+    <string name="undo">Undo</string>
     <string name="get_flight_btn">Get Data</string>
     <string name="edit_aviation">3 letter code pls</string>
 </resources>
