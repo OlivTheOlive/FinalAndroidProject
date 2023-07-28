@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityCurrencyConverterBinding;
@@ -44,6 +47,12 @@ public class CurrencyConverterActivity extends AppCompatActivity {
     //These is the variables in Currency Converter Activity
     private TextView textView;
 
+    //calling DAO
+    CurrencyDAO currencyDAO;
+
+    //Dao Connection
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,27 @@ public class CurrencyConverterActivity extends AppCompatActivity {
         currencyModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
         //recyclerView = binding.recyclerview;
         amounts = currencyModel.amountCov.getValue();
+
+        /**
+         * This is to create the database and make a connection with currencyDAO
+         */
+        CurrencyDatabase currencyDatabase = Room.databaseBuilder(getApplicationContext()
+                ,CurrencyDatabase.class
+                , "currencyDatabase").build();
+        currencyDAO = currencyDatabase.cDAO();
+
+        if(amounts == null){
+            currencyModel.amountCov.setValue( amounts = new ArrayList<>());
+            Executor thread = Executors.newSingleThreadExecutor();
+            thread.execute(()->{
+               amounts.addAll( currencyDAO.getAllAmount() );
+               runOnUiThread(()->binding.recyclerview.setAdapter(myAdapter));
+            });
+        }
+
+        if(amounts == null){
+            currencyModel.amountCov.postValue( amounts = new ArrayList<>());
+        }
 
         /**
          * This is an object that represents everything that goes on a row in a list

@@ -1,14 +1,12 @@
 package algonquin.cst2335.finalandroidproject.Currency;
 
-import android.icu.util.CurrencyAmount;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.util.List;
+import java.util.Collection;
 
 
 @Dao
@@ -21,7 +19,7 @@ public interface CurrencyDAO {
     public Integer updateAmount(CurrencySelected amount);
 
     @Query("Select * from CurrencySelected")
-    public List<CurrencyAmount> getAllAmount();
+    public Collection<? extends CurrencySelected> getAllAmount();
 
     @Delete
     public Integer deleteAmount(CurrencySelected amount);
