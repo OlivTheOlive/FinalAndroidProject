@@ -8,4 +8,5 @@
     <string name="bear_title">Generate Bear Image</string>
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
+    <string name="txt_edit1">Entrer le montant</string>
 </resources>

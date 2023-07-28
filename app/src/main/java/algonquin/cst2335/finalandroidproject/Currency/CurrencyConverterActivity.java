@@ -1,25 +1,33 @@
 package algonquin.cst2335.finalandroidproject.Currency;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.Date;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityCurrencyConverterBinding;
 
 public class CurrencyConverterActivity extends AppCompatActivity {
 
+    //Import CurrencySelected
+    CurrencySelected currencySelected = new CurrencySelected();
+
+    //this is used for binding the elements in ActivityCurrencyConverter
     private ActivityCurrencyConverterBinding binding;
+
+    //This is used for creating an array list of object enterAmount
+    private ArrayList<CurrencySelected> amount;
+
+    //This is calling the CurrencyViewModel
+    private CurrencyViewModel currencyModel;
+
 
 
     @Override
@@ -28,61 +36,51 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 
         binding = ActivityCurrencyConverterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //this is the ViewModel provider for Currency, calling CurrencyViewModel
+        currencyModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
+        amount = currencySelected.amount.intValue();
 
         SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        String cad = prefs.getString("editTextText1","");
-        String ff = prefs.getString("editTextText2","");
-        String php = prefs.getString("editTextText3","");
+       // String amount = prefs.getInt("editTextText1","");
+        Integer amount = prefs.getInt("amount", Integer.parseInt(""));
 
-        binding.editTextText.setText(cad);
-        binding.editTextText2.setText(ff);
-        binding.editTextText3.setText(php);
 
-      /*
-      TextView messageText = null;
+        binding.amount.setText(amount);
+
+
+       /* TextView messageText = null;
 
         Snackbar snackbar = Snackbar.make(messageText, "Snackbar is working", Snackbar.LENGTH_LONG);
         snackbar.setAction("UNDO", new View.OnClickListener() {
-        @Override
+            @Override
             public void onClick(View view){
-             Toast.makeText(getApplicationContext(),"UNDO action", Toast.LENGTH_LONG).show();
-        }
-        });
-        */
+                Toast.makeText(getApplicationContext(),"UNDO action", Toast.LENGTH_LONG).show();
+            }
+        });*/
 
-
-
-        //Toast for converter button
-        binding.button.setOnClickListener(v -> {
-            String inputType = binding.editTextText.getText().toString();
-            String inputType2 = binding.editTextText2.getText().toString();
-            String inputType3 = binding.editTextText3.getText().toString();
-
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("", inputType);
-            editor.putString("", inputType2);
-            editor.putString("", inputType3);
-            editor.apply();
-
-                Toast.makeText(getApplicationContext(), "Amount Converted is " + inputType,+ Toast.LENGTH_LONG).show();
-
-                Toast.makeText(getApplicationContext(), "Amount Converted is " + inputType2,+ Toast.LENGTH_LONG).show();
-
-                Toast.makeText(getApplicationContext(), "Amount Converted is " + inputType3,+ Toast.LENGTH_LONG).show();
+        //This is the binding for CAD button
+        binding.CADButton.setOnClickListener(v -> {
+            int type = 1;
+            SimpleDateFormat time = new SimpleDateFormat("EEEE, dd-MM-yyyy hh-mm-ss a");
+            String timeOfCurrency = time.format(new Date());
+            CurrencySelected CAD = new CurrencySelected(binding.amount.getText().toString(),timeOfCurrency,type);
+            amount.add(CAD);
+            myAdapter.notifyDataSetChanged();
+            binding.amount.setText("");
 
         });
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("there is an alert")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int id){
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
+        //This is the binding for FF button
+        binding.FFButton.setOnClickListener(v -> {
+            int type = 2;
+            SimpleDateFormat time = new SimpleDateFormat("EEEE, dd-MM-yyyy hh-mm-ss a");
+            String timeOfCurrency = time.format(new Date());
+            CurrencySelected FF = new CurrencySelected(binding.amount.getText().toString(),timeOfCurrency,type);
 
+        });
+
+
+        //This is an alert
 
     }
 
