@@ -15,7 +15,7 @@ import java.util.List;
 public interface CurrencyDAO {
 
     @Insert
-    public long insertAmount(CurrencySelected amountToInsert);
+    public long insertAmount(CurrencySelected amount);
 
     @Update
     public Integer updateAmount(CurrencySelected amount);

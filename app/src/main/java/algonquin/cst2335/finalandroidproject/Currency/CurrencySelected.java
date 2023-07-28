@@ -12,34 +12,31 @@ public class CurrencySelected{
 
     public int id;
 
-    @ColumnInfo(name="Amount")
-    Integer amount;
+    @ColumnInfo(name="amountToCovert")
+    String amountCov;
 
-    @ColumnInfo(name="timeOfCurrency")
-    String timeOfCurrency;
+    @ColumnInfo(name="time")
+    String time;
 
     @ColumnInfo(name="CADOrFF")
-    String CADOrFF;
+    Integer CADOrFF;
+
+    public CurrencySelected(){}
 
 
-    public CurrencySelected(String s, String timeOfCurrency, int type) {}
-
-    CurrencySelected(int a, String t, String cadOrff ){
-        amount = a;
-        timeOfCurrency = t;
+    CurrencySelected(String a, String t, Integer cadOrff ){
+        amountCov = a;
+        time = t;
         CADOrFF = cadOrff;
     }
 
-    public CurrencySelected() {
 
+    public String getAmount(){
+        return amountCov;
     }
 
-    public Integer getAmount(){
-        return amount;
-    }
-
-    public Integer getTimeOfCurrency(){
-        return timeOfCurrency;
+    public String getTimeOfCurrency(){
+        return time;
     }
 
     public Integer getCADOrFF(){
