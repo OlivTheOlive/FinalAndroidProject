@@ -14,19 +14,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import algonquin.cst2335.finalandroidproject.Aviation.DAO.FlightRequestDAO;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.AviationTrackerViewModel;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.FlightRequest;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.FlightRequestDB;
+import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityAviationTrackerBinding;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityGetFlightDataBinding;
 
@@ -36,10 +47,12 @@ public class AviationTrackerActivity extends AppCompatActivity {
     private static final String REQ_CODE = "Code";
     private  RecyclerView.Adapter myAdapter;
     private ActivityAviationTrackerBinding binding;
+    private ActivityGetFlightDataBinding binding2;
     private FlightRequestDAO DAO;
     private ArrayList<FlightRequest> requests;
     private FlightRequest newReq;
     private SharedPreferences sharedPreferences;
+    private RequestQueue queue = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +81,57 @@ public class AviationTrackerActivity extends AppCompatActivity {
         String savedCode = sharedPreferences.getString(REQ_CODE,"");
         binding.editTextText.setText(savedCode);
 
+
         binding.button.setOnClickListener(click ->{
-            String typed = binding.editTextText.getText().toString();
-            newReq = new FlightRequest(typed);
+            String typed = binding.editTextText.getText().toString().toUpperCase();
+            String url = "https://api.aviationstack.com/v1/flights?access_key=9694046b348f410681e40e36750f3730&dep_iata="+typed;
             if(checkCode(typed)){
-                requests.add(newReq);
-                myAdapter.notifyItemInserted(requests.size()-1);
-
+                queue = Volley.newRequestQueue(this);
                 Executor thread = Executors.newSingleThreadExecutor();
-                thread.execute(() -> newReq.id = (int) DAO.insertCode(newReq));
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(REQ_CODE,typed);
-                editor.apply();
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                        (response) -> {
+                            try {
+                                JSONArray dataArray = response.getJSONArray("data");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+                                    JSONObject position = dataArray.getJSONObject(i);
+                                    JSONObject depart = position.getJSONObject("departure");
+                                    String airportName= depart.getString("airport");
+                                    JSONObject flight = position.getJSONObject("flight");
+                                    String flightString = flight.getString("number");
+                                    String status = position.getString("flight_status");
+                                    String date = position.getString("flight_date");
+
+
+
+                                    FlightRequest newReq = new FlightRequest("AP code: "+ typed,
+                                                                                "Flight #: "+flightString,
+                                                                                "Airport Dep.: "+ airportName,
+                                                                                "Status: "+status);
+                                    requests.add(newReq);
+                                    myAdapter.notifyItemInserted(requests.size() - 1);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        },
+                        error -> {
+                            // Handle the error case if needed
+                            error.printStackTrace();
+                        });
+
+                    queue.add(request);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(REQ_CODE, typed);
+                    editor.apply();
+
                 binding.editTextText.setText("");
             }
         });
+        binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
+
 
         binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
             @NonNull
@@ -97,10 +145,18 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
             @Override
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
-                holder.codeText.setText("");
+                holder.code.setText("");
+                holder.nameID.setText("");
+                holder.flightId.setText("");
+                holder.statusID.setText("");
+
 
                 FlightRequest obj = requests.get(position);
-                holder.codeText.setText(obj.getCode());
+                holder.code.setText(obj.getCode());
+                holder.flightId.setText((obj.getFlightID()));
+                holder.nameID.setText(obj.getNameID());
+                holder.statusID.setText(obj.getStatusID());
+
             }
 
             @Override
@@ -108,6 +164,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 return requests.size();
             }
         });
+
     }
 
 
@@ -137,32 +194,53 @@ public class AviationTrackerActivity extends AppCompatActivity {
     }
 
     class MyRowHolder extends RecyclerView.ViewHolder {
-        TextView codeText;
+        TextView code, nameID, flightId, statusID;
+
 
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(clk -> {
+            itemView.setOnLongClickListener(clk -> {
                 int position = getAbsoluteAdapterPosition();
-                AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
-                builder.setTitle("Question:")
-                        .setMessage("Do you want to delete the dataset: " + codeText.getText())
-                        .setNegativeButton("No", (dialog, cl) -> {
-                        })
-                        .setPositiveButton("Yes", (dialog, cl) -> {
-                            Executor thread = Executors.newSingleThreadExecutor();
-                            FlightRequest m = requests.get(position);
-                            thread.execute(() -> DAO.deleteCode(m));
-                            requests.remove(position);
-                            myAdapter.notifyItemRemoved(position);
-                            Snackbar.make(codeText, "You deleted message #" + position, Snackbar.LENGTH_LONG)
-                                    .setAction("Undo", click -> {
-                                        requests.add(position, m);
-                                        runOnUiThread(() -> myAdapter.notifyItemInserted(position));
-                                    })
-                                    .show();
-                        })
-                        .create().show();
+                FlightRequest m = requests.get(position);
+                if (m != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
+                    builder.setTitle("Question:")
+                            .setMessage("Do you want to delete the dataset: " + flightId.getText())
+                            .setNegativeButton("Save", (dialog, cl) -> {
+                                Executor thread = Executors.newSingleThreadExecutor();
+                                thread.execute(() -> DAO.insertCode(m));
+                                requests.add(position, m);
+                                myAdapter.notifyItemInserted(position);
+                                Snackbar.make(flightId, "You saved dataset #" + position, Snackbar.LENGTH_LONG)
+                                        .setAction("Undo", click -> {
+                                            requests.remove(position);
+                                            runOnUiThread(() -> myAdapter.notifyItemRemoved(position));
+                                        })
+                                        .show();
+                            })
+                            .setPositiveButton("Delete", (dialog, cl) -> {
+                                Executor thread = Executors.newSingleThreadExecutor();
+                                thread.execute(() -> DAO.deleteCode(m));
+                                requests.remove(position);
+                                myAdapter.notifyItemRemoved(position);
+                                Snackbar.make(flightId, "You deleted dataset #" + position, Snackbar.LENGTH_LONG)
+                                        .setAction("Undo", click -> {
+                                            requests.add(position, m);
+                                            runOnUiThread(() -> myAdapter.notifyItemInserted(position));
+                                        })
+                                        .show();
+                            })
+                            .create().show();
+                }
+                return false;
             });
+
+            code= itemView.findViewById(R.id.airCodeID);
+            nameID= itemView.findViewById(R.id.nameID);
+            flightId= itemView.findViewById(R.id.flighNum);
+            statusID= itemView.findViewById(R.id.statusID);
+
+
         }
 
 

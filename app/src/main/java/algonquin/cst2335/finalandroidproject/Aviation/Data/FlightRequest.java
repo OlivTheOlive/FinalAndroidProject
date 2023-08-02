@@ -14,10 +14,23 @@ public class FlightRequest {
     @ColumnInfo(name= "reqCode")
     protected String Code;
 
-    public FlightRequest(){};
-    public FlightRequest(String m){
+    @ColumnInfo(name= "nameID")
+    protected String nameID;
 
+
+    @ColumnInfo(name= "statusID")
+    protected String statusID;
+
+
+    @ColumnInfo(name= "flightID")
+    protected String flightID;
+
+    public FlightRequest(){};
+    public FlightRequest(String m, String n, String b, String k){
+        nameID=b;
         Code = m;
+        flightID=n;
+        statusID=k;
     };
 
     public String getCode() {
@@ -27,6 +40,26 @@ public class FlightRequest {
     public void setCode(String code) {
         Code = code;
     }
+    public String getFlightID() {
+        return flightID;
+    }
 
+    public void setFlightID(String flightID) {
+        this.flightID = flightID;
+    }
 
+    public String getStatusID() {
+        return statusID;
+    }
+
+    public void setStatusID(String statusID) {
+        this.statusID = statusID;
+    }
+    public String getNameID() {
+        return nameID;
+    }
+
+    public void setNameID(String nameID) {
+        this.nameID = nameID;
+    }
 }
