@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -186,7 +188,6 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 
             } else {
                 amounts.add(CAD);
-                amounts.add(FF);
                 myAdapter.notifyDataSetChanged();
                 binding.amountInput.setText("");
                 recyclerView.scrollToPosition(amounts.size() - 1);
@@ -210,40 +211,41 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             SimpleDateFormat time = new SimpleDateFormat("EEEE, dd-MM-yyyy hh-mm-ss a");
             String timeCov = time.format(new Date());
             CurrencySelected CAD = new CurrencySelected(binding.amountInput.getText().toString(), binding.amountInput.getText().toString(), timeCov, type);
-            CurrencySelected FF = new CurrencySelected(binding.amountInput.getText().toString(), binding.amountInput.getText().toString(), timeCov,type);
+            CurrencySelected FF = new CurrencySelected(binding.amountInput.getText().toString(), binding.amountInput.getText().toString(), timeCov, type);
 
-           if(binding.amountInput == null) {
+            if (binding.amountInput == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Please input a number")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
 
-               AlertDialog.Builder builder = new AlertDialog.Builder(this);
-               builder.setMessage("Please input a number")
-                       .setCancelable(false)
-                       .setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                           public void onClick(DialogInterface dialog, int id){
-                               dialog.cancel();
-                           }
-                       });
-               AlertDialog alert = builder.create();
-               alert.show();
+            } else {
 
-           } else {
-               amounts.add(CAD);
-               amounts.add(FF);
-               myAdapter.notifyDataSetChanged();
-               binding.amountInput.setText("");
-               recyclerView.scrollToPosition(amounts.size() - 1);
-               Executor thread = Executors.newSingleThreadExecutor();
-               thread.execute(new Runnable(){
+                amounts.add(FF);
+                myAdapter.notifyDataSetChanged();
+                binding.amountInput.setText("");
+                recyclerView.scrollToPosition(amounts.size() - 1);
+                Executor thread = Executors.newSingleThreadExecutor();
+                thread.execute(new Runnable() {
 
-                   @Override
-                   public void run() { FF.id = (int) currencyDAO.insertAmount(FF);}
+                    @Override
+                    public void run() {
+                        FF.id = (int) currencyDAO.insertAmount(FF);
+                    }
 
-               });
-               Toast.makeText(getApplicationContext(), "Amount Converted", Toast.LENGTH_LONG).show();
-           }
+                });
+                Toast.makeText(getApplicationContext(), "Amount Converted", Toast.LENGTH_LONG).show();
 
+            }
         });
 
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
+            binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
         currencyModel.selectAmount.observe(this,(newAmount) -> {
 
@@ -283,10 +285,47 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        CurrencySelected selected = currencyModel.selectAmount.getValue();
+        TextView amountInput = findViewById(R.id.amountInput);
 
-        //CurrencySelected selected = CurrencySelected..getvalue();
+        if(item.getItemId() == R.id.deleteCurrency){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
+            builder.setTitle("Currency History Delete")
+                    .setMessage("Please confirm you want to delete this history")
+                    .setNegativeButton("No", (dialog, clk) -> {})
+                    .setPositiveButton("Yes", (dialog, clk) -> {
+                        Executor thread = Executors.newSingleThreadExecutor();
+                        int position = amounts.indexOf(selected);
+                        CurrencySelected m = amounts.get(position);
+                        thread.execute(()->{
+                            currencyDAO.deleteAmount(m);
+                        });
+
+                        amounts.remove(position);
+                        myAdapter.notifyItemRemoved(position);
+                        Snackbar.make(amountInput, "You deleted message #" + position, Snackbar.LENGTH_LONG)
+                                .setAction("Undo", click -> {
+                                    amounts.add(position, m);
+                                    runOnUiThread(() -> myAdapter.notifyItemInserted(position));
+                                })
+                                .show();
+                        onBackPressed();
+                    }).create().show();
+
+        } else if (item.getItemId() == R.id.about){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
+            builder.setTitle("How to use the application")
+                    .setMessage("1. Input amount you want to convert" +
+                            "2. Click on CAD if the amount is CAD or FF if the amount is in FF")
+                    .setNegativeButton("",(dialog, clk) -> {})
+                    .setPositiveButton("Ok", (dialog, clk) -> {
+                    }).create().show();
+        }
 
         return true;
+
     }
 
 

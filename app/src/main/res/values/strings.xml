@@ -8,6 +8,8 @@
     <string name="txt_edit1">Enter Amount</string>
     <string name="CAD">CAD</string>
     <string name="FF">FF</string>
+    <string name="dCurrency">Delete</string>
+    <string name="about">How to</string>
 
     <string name="bear_title">Generate Bear Image</string>
     <string name="height">Height</string>

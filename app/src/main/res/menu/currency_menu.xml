@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/bear"
+        android:icon="@drawable/trivia"
         android:title="Bear"
         app:showAsAction="always" />
     <item
@@ -11,7 +11,14 @@
         android:title="Aviation"
         app:showAsAction="always" />
     <item
-        android:icon="@drawable/trivia"
+        android:icon="@drawable/bear"
         android:title="Trivia"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/deleteCurrency"
+        android:title="@string/dCurrency"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
+        android:title="@string/about" />
 </menu>

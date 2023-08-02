@@ -9,4 +9,6 @@
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
     <string name="txt_edit1">Entrer le montant</string>
+    <string name="dCurrency">effacer</string>
+    <string name="about">Comment utiliser</string>
 </resources>

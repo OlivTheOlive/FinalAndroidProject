@@ -20,11 +20,11 @@ public class CurrencyDetailsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         CurrencyDetailsLayoutBinding binding = CurrencyDetailsLayoutBinding.inflate(inflater);
 
+
         binding.CAD.setText("CAD");
-        //need to change the outline
-       // binding.CADAmount.setText(  );
+        binding.CADAmount.setText(selected.amountConverted);
         binding.FF.setText("FF");
-        //binding.FFAmount.setText( );
+        binding.FFAmount.setText(selected.amountCov);
         binding.id.setText(selected.id);
 
         return binding.getRoot();
