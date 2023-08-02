@@ -13,6 +13,7 @@
         android:background="#6750A4"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints"></androidx.appcompat.widget.Toolbar>
+
     <EditText
         android:id="@+id/widthEditText"
         android:layout_width="182dp"
@@ -22,10 +23,10 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.394" />
+        app:layout_constraintVertical_bias="0.355" />
 
     <TextView
         android:id="@+id/titleText"
@@ -34,6 +35,7 @@
         android:text="@string/bear_title"
         app:layout_constraintBottom_toTopOf="@+id/heightEditText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.542" />
@@ -47,7 +49,7 @@
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/widthEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText"
         app:layout_constraintVertical_bias="0.5" />
@@ -61,34 +63,59 @@
         android:text="Generate Image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/widthEditText"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.146" />
 
     <ImageView
         android:id="@+id/theBear"
         android:layout_width="231dp"
         android:layout_height="204dp"
-        android:src="@drawable/bear"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generateButton">
+        app:layout_constraintTop_toBottomOf="@+id/generateButton"
+        app:layout_constraintVertical_bias="0.454">
 
     </ImageView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
-        android:layout_width="409dp"
-        android:layout_height="100dp"
+        android:layout_width="407dp"
+        android:layout_height="137dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
+        android:scrollbars="horizontal"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/generateButton"
-        app:layout_constraintVertical_bias="0.842" />
+        app:layout_constraintVertical_bias="0.979" />
+
+
+    <Button
+        android:id="@+id/showPictures"
+        android:layout_width="178dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="19dp"
+        android:text="Show Saved Images"
+        app:layout_constraintBottom_toBottomOf="@+id/generateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/generateButton"
+        app:layout_constraintTop_toBottomOf="@+id/widthEditText" />
+    <FrameLayout
+        android:id="@+id/fragmentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

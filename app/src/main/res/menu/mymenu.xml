@@ -22,4 +22,8 @@
         android:title="Trivia"
         android:icon="@drawable/trivia"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/delete"
+        android:title="Delete"
+        app:showAsAction="never"/>
 </menu>
