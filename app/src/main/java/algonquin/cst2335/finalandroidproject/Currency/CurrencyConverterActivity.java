@@ -7,9 +7,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.room.migration.Migration;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,8 +32,7 @@ import algonquin.cst2335.finalandroidproject.databinding.FfConverterBinding;
 
 public class CurrencyConverterActivity extends AppCompatActivity {
 
-    //Import CurrencySelected
-    CurrencySelected currencySelected = new CurrencySelected();
+
 
     //this is used for binding the elements in ActivityCurrencyConverter
     private ActivityCurrencyConverterBinding binding;
@@ -41,45 +44,49 @@ public class CurrencyConverterActivity extends AppCompatActivity {
     private CurrencyViewModel currencyModel;
 
     //This is calling the RecyclerView
-    private RecyclerView.Adapter myAdapter;
     private RecyclerView recyclerView;
+    private RecyclerView.Adapter myAdapter;
+
 
     //These is the variables in Currency Converter Activity
     private TextView textView;
 
+    CurrencyDatabase currencyDatabase;
+
     //calling DAO
     CurrencyDAO currencyDAO;
 
-    //Dao Connection
+    //Import CurrencySelected
+    CurrencySelected currencySelected = new CurrencySelected();
 
 
 
     @Override
+    @SuppressLint("NotifyDataSetChange")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityCurrencyConverterBinding.inflate(getLayoutInflater());
-
-        setContentView(binding.getRoot());
-        //this is the ViewModel provider for Currency, calling CurrencyViewModel
         currencyModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
-        //recyclerView = binding.recyclerview;
         amounts = currencyModel.amountCov.getValue();
+
+
+        currencyDatabase = Room.databaseBuilder(getApplicationContext()
+                        ,CurrencyDatabase.class
+                        , "currencyDatabase")
+                .addMigrations(CurrencyDatabase.MIGRATION_1_2)
+                .build();
+        currencyDAO = currencyDatabase.cDAO();
+
 
         /**
          * This is to create the database and make a connection with currencyDAO
          */
-        CurrencyDatabase currencyDatabase = Room.databaseBuilder(getApplicationContext()
-                ,CurrencyDatabase.class
-                , "currencyDatabase").build();
-        currencyDAO = currencyDatabase.cDAO();
-
         if(amounts == null){
             currencyModel.amountCov.setValue( amounts = new ArrayList<>());
             Executor thread = Executors.newSingleThreadExecutor();
             thread.execute(()->{
                amounts.addAll( currencyDAO.getAllAmount() );
-               runOnUiThread(()->binding.recyclerview.setAdapter(myAdapter));
+               runOnUiThread( () -> binding.recyclerview.setAdapter( myAdapter ));
             });
         }
 
@@ -87,19 +94,13 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             currencyModel.amountCov.postValue( amounts = new ArrayList<>());
         }
 
+        binding = ActivityCurrencyConverterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         /**
-         * This is an object that represents everything that goes on a row in a list
+         * This is the toolbar
          */
-        class MyRowHolder extends RecyclerView.ViewHolder{
-            //These are the variable from currency models CAD and FF
-            TextView amountConvertText;
-            TextView timeText;
-            public MyRowHolder(@NonNull View itemView){
-                    super(itemView);
-                    amountConvertText = itemView.findViewById(R.id.amountConvert);
-                    timeText = itemView.findViewById(R.id.time);
-        }
-        }
+        setSupportActionBar(binding.currencyToolbar);
 
         /**
          * This is the recyclerview
@@ -117,11 +118,16 @@ public class CurrencyConverterActivity extends AppCompatActivity {
                 }
             }
 
+
             @Override
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
-                CurrencySelected object = amounts.get(position);
-                holder.amountConvertText.setText(object.getCADOrFF());
+                holder.amountConvertText.setText("");
                 holder.timeText.setText("");
+
+                CurrencySelected currencySelected = amounts.get(position);
+                holder.amountConvertText.setText(currencySelected.getAmount());
+                holder.timeText.setText(currencySelected.getTimeOfCurrency());
+
             }
 
             @Override
@@ -129,27 +135,46 @@ public class CurrencyConverterActivity extends AppCompatActivity {
                 return amounts.size();
             }
 
+            public int getItemViewType(int position) {
+                CurrencySelected selected = amounts.get(position);
+                if(selected.getCADOrFF() % 2 == 0){
+                    return 1;
+                } else {
+                    return 2;
+                }
+            }
         });
 
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        //Keep this in mind I think I need to update this
+        recyclerView = binding.recyclerview;
 
         /**
          * This is the button function for CAD button
          */
-        binding.CADButton.setOnClickListener(v -> {
+        binding.CADButton.setOnClickListener(clk -> {
             int type = 1;
             SimpleDateFormat time = new SimpleDateFormat("EEEE, dd-MM-yyyy hh-mm-ss a");
             String timeCov = time.format(new Date());
-            CurrencySelected CAD = new CurrencySelected(binding.amountInput.getText().toString(), timeCov, type);
-            amounts.add(CAD);
-            myAdapter.notifyDataSetChanged();
-            binding.amountInput.setText("");
+            CurrencySelected CAD = new CurrencySelected(binding.amountInput.getText().toString(), binding.amountInput.getText().toString(), timeCov, type);
 
-            if(binding.amountInput!= null) {
-                Toast.makeText(getApplicationContext(), "Amount Converted", Toast.LENGTH_LONG).show();
-            } else {
+            CurrencySelected FF = new CurrencySelected(binding.amountInput.getText().toString(), binding.amountInput.getText().toString(),timeCov,type);
+
+
+
+          /*
+          TextView messageText = null;
+            Snackbar snackbar = Snackbar.make(messageText, "Snackbar is working", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    Toast.makeText(getApplicationContext(),"UNDO action", Toast.LENGTH_LONG).show();
+                }
+            });
+            */
+
+            if(binding.amountInput == null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("there is an alert")
+                builder.setMessage("Please input a number")
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
@@ -158,6 +183,21 @@ public class CurrencyConverterActivity extends AppCompatActivity {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
+
+            } else {
+                amounts.add(CAD);
+                amounts.add(FF);
+                myAdapter.notifyDataSetChanged();
+                binding.amountInput.setText("");
+                recyclerView.scrollToPosition(amounts.size() - 1);
+                Executor thread = Executors.newSingleThreadExecutor();
+                thread.execute(new Runnable(){
+
+                    @Override
+                    public void run() { FF.id = (int) currencyDAO.insertAmount(FF);}
+
+                });
+                Toast.makeText(getApplicationContext(), "Amount Converted", Toast.LENGTH_LONG).show();
             }
 
         });
@@ -169,16 +209,13 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             int type = 2;
             SimpleDateFormat time = new SimpleDateFormat("EEEE, dd-MM-yyyy hh-mm-ss a");
             String timeCov = time.format(new Date());
-            CurrencySelected FF = new CurrencySelected(binding.amountInput.getText().toString(),timeCov,type);
-            amounts.add(FF);
-            myAdapter.notifyDataSetChanged();
-            binding.amountInput.setText("");
+            CurrencySelected CAD = new CurrencySelected(binding.amountInput.getText().toString(), binding.amountInput.getText().toString(), timeCov, type);
+            CurrencySelected FF = new CurrencySelected(binding.amountInput.getText().toString(), binding.amountInput.getText().toString(), timeCov,type);
 
-           if(binding.amountInput!= null) {
-               Toast.makeText(getApplicationContext(), "Amount Converted", Toast.LENGTH_LONG).show();
-           } else {
+           if(binding.amountInput == null) {
+
                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-               builder.setMessage("there is an alert")
+               builder.setMessage("Please input a number")
                        .setCancelable(false)
                        .setPositiveButton("OK", new DialogInterface.OnClickListener(){
                            public void onClick(DialogInterface dialog, int id){
@@ -187,39 +224,69 @@ public class CurrencyConverterActivity extends AppCompatActivity {
                        });
                AlertDialog alert = builder.create();
                alert.show();
+
+           } else {
+               amounts.add(CAD);
+               amounts.add(FF);
+               myAdapter.notifyDataSetChanged();
+               binding.amountInput.setText("");
+               recyclerView.scrollToPosition(amounts.size() - 1);
+               Executor thread = Executors.newSingleThreadExecutor();
+               thread.execute(new Runnable(){
+
+                   @Override
+                   public void run() { FF.id = (int) currencyDAO.insertAmount(FF);}
+
+               });
+               Toast.makeText(getApplicationContext(), "Amount Converted", Toast.LENGTH_LONG).show();
            }
 
         });
 
+        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
+
+        currencyModel.selectAmount.observe(this,(newAmount) -> {
+
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.currency_menu, menu);
+        return true;
+    }
+    /**
+     * This is an object that represents everything that goes on a row in a list
+     */
+    class MyRowHolder extends RecyclerView.ViewHolder{
+        //These are the variable from currency models CAD and FF
+        TextView amountConvertText;
+        TextView timeText;
+        public MyRowHolder(@NonNull View itemView){
+            super(itemView);
+
+            itemView.setOnClickListener(clk -> {
+                int position = getAbsoluteAdapterPosition();
+                CurrencySelected selected = amounts.get(position);
+                currencyModel.selectAmount.postValue(selected);
+
+            });
+
+            amountConvertText = itemView.findViewById(R.id.amountConvert);
+            timeText = itemView.findViewById(R.id.timeText);
+        }
+
+    }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
 
+        //CurrencySelected selected = CurrencySelected..getvalue();
 
-
-       /* SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-       // String amount = prefs.getInt("editTextText1","");
-        Integer amount = prefs.getInt("amount", "");
-
-
-        binding.amount.setText(amount);
-
-
-       /* TextView messageText = null;
-
-        Snackbar snackbar = Snackbar.make(messageText, "Snackbar is working", Snackbar.LENGTH_LONG);
-        snackbar.setAction("UNDO", new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Toast.makeText(getApplicationContext(),"UNDO action", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-        //This is the binding for CAD button
-
-
-
-        //This is an alert*/
-
+        return true;
     }
 
 
