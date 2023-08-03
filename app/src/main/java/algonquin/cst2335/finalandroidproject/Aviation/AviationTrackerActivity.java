@@ -125,15 +125,18 @@ public class AviationTrackerActivity extends AppCompatActivity {
         String savedCode = sharedPreferences.getString(REQ_CODE,"");
         binding.editTextText.setText(savedCode);
 
-
-        ATViewModel.selectedRequest.observe(this, (fragReq) -> {
+        ATViewModel.selectedRequest.observe(this, (newValue) -> {
             FragmentManager fMgr = getSupportFragmentManager();
             FragmentTransaction tx = fMgr.beginTransaction();
-            FlightRequestDetails frd = new FlightRequestDetails(fragReq);
-            tx.replace(R.id.fragLocation, frd);
-            tx.addToBackStack(null); // Use a unique name (e.g., "FlightRequestDetails") instead of null
+            FlightRequestDetails mdf = new FlightRequestDetails(newValue);
+            tx.replace(R.id.fragLocation, mdf);
+            tx.addToBackStack("");
             tx.commit();
+
+
         });
+
+
 
         binding.button.setOnClickListener(click ->{
             String typed = binding.editTextText.getText().toString().toUpperCase();
@@ -164,11 +167,11 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
 
 
-                                    FlightRequest newReq = new FlightRequest("AP code: "+ typed,
-                                                                                "Flight #: "+flightString,
-                                                                                "Airport Dep.: "+ airportName,
-                                                                                "Status: "+status,
-                                                                                "Not Saved");
+                                    FlightRequest newReq = new FlightRequest("AP code: "+ typed,"Flight #: "+flightString,
+                                            "Airport Dep.: "+ airportName,"Status: "+status,"Not Saved","Date: "+date,"Departure airport: "+departureAP,
+                                            "Arrival Airport: "+arrivalAP,"Airline Name: "+airlineN);
+
+
 
                                     requests.add(newReq);
                                     myAdapter.notifyItemInserted(requests.size() - 1);
@@ -212,11 +215,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 holder.flightId.setText("");
                 holder.statusID.setText("");
                 holder.saveID.setText("Not Saved");
-                holder.detDate.setText("");
-                holder.departureAirport.setText("");
-                holder.airlineName.setText("");
-                holder.ArrivalAirport.setText("");
-                holder.detFlightID.setText("");
+
 
 
                 FlightRequest obj = requests.get(position);
@@ -225,12 +224,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 holder.nameID.setText(obj.getNameID());
                 holder.statusID.setText(obj.getStatusID());
                 holder.saveID.setText(obj.getSaveID());
-                holder.detStatus.setText(obj.getStatusID());
-                holder.detDate.setText(obj.getDate());
-                holder.departureAirport.setText(obj.getDepartureAP());
-                holder.airlineName.setText(obj.getAirlineN());
-                holder.ArrivalAirport.setText(obj.getArrivalAP());
-                holder.detFlightID.setText(obj.getFlightID());
 
 
             }
@@ -292,6 +285,13 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 int position = getAbsoluteAdapterPosition();
                 FlightRequest m = requests.get(position);
                 ATViewModel.selectedRequest.postValue(m);
+
+//                FragmentManager fMgr = getSupportFragmentManager();
+//                FragmentTransaction tx = fMgr.beginTransaction();
+//                FlightRequestDetails frd = FlightRequestDetails.newInstance(m);
+//                tx.replace(R.id.fragLocation, frd);
+//                tx.addToBackStack(null);
+//                tx.commit();
 
 
 
@@ -368,6 +368,8 @@ public class AviationTrackerActivity extends AppCompatActivity {
             flightId= itemView.findViewById(R.id.flighNum);
             statusID= itemView.findViewById(R.id.statusID);
             saveID=itemView.findViewById(R.id.saveID);
+
+
             airlineName= itemView.findViewById(R.id.airlineName);
             ArrivalAirport= itemView.findViewById(R.id.ArrivalAirport);
             departureAirport= itemView.findViewById(R.id.departureAirport);

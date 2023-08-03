@@ -32,20 +32,19 @@ public class FlightRequest {
 
     @ColumnInfo(name= "date")
     protected String date;
+    public FlightRequest(){}
 
-
-    public FlightRequest(String m, String n, String b, String k, String s,){
-        Code = m;
-        flightID=n;
-        nameID=b;
-        statusID=k;
-        saveID = s;
-//        departureAP=t;
-//        arrivalAP=g;
-//        airlineN=d;
-//        date=f;
-    };
-
+    public FlightRequest(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+        Code=s;
+        flightID=s1;
+        nameID=s2;
+        statusID=s3;
+        saveID=s4;
+        date=s5;
+        departureAP=s6;
+        arrivalAP=s7;
+        airlineN=s8;
+    }
 
 
     public String getCode() {
