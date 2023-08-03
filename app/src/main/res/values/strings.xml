@@ -19,4 +19,6 @@
     <string name="width">Width</string>
     <string name="get_flight_btn">Get Data</string>
     <string name="edit_aviation">3 letter code pls</string>
+    <string name="save">Save</string>
+    <string name="flightDet">Flight Dets: </string>
 </resources>

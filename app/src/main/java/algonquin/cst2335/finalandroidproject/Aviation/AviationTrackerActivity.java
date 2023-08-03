@@ -3,6 +3,7 @@ package algonquin.cst2335.finalandroidproject.Aviation;
 import static java.lang.Character.isDigit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,8 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,10 +43,12 @@ import algonquin.cst2335.finalandroidproject.Aviation.Data.AviationTrackerViewMo
 import algonquin.cst2335.finalandroidproject.Aviation.Data.FlightRequest;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.FlightRequestDB;
 import algonquin.cst2335.finalandroidproject.Aviation.Data.FlightRequestDetails;
+import algonquin.cst2335.finalandroidproject.Bear.BearActivity;
+import algonquin.cst2335.finalandroidproject.Currency.CurrencyConverterActivity;
 import algonquin.cst2335.finalandroidproject.R;
+import algonquin.cst2335.finalandroidproject.Trivia.TriviaActivity;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityAviationTrackerBinding;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityGetFlightDataBinding;
-import algonquin.cst2335.finalandroidproject.databinding.AviationDetailsBinding;
 
 public class AviationTrackerActivity extends AppCompatActivity {
 
@@ -55,7 +56,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
     private static final String REQ_CODE = "Code";
     private  RecyclerView.Adapter myAdapter;
     private ActivityAviationTrackerBinding binding;
-    private AviationDetailsBinding binding2;
     private FlightRequestDAO DAO;
     private ArrayList<FlightRequest> requests;
     private FlightRequest newReq;
@@ -72,34 +72,45 @@ public class AviationTrackerActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch( item.getItemId() )
-        {
-            case R.id.about:
-                AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
-                builder.setTitle("Who Created this! ")
-                        .setMessage("Version 1.0, created by Olivie Bergeron")
-                        .setPositiveButton("OKiii", (dialog, cl) -> {})
-                        .create().show();
-                break;
-            case R.id.howID:
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(AviationTrackerActivity.this);
-                builder2.setTitle(" How To?")
-                        .setMessage("Just type an airport code to get your data")
-                        .setPositiveButton("OKiii", (dialog, cl) -> {})
-                        .create().show();
-                break;
-            default:
-                break;
-        }
+        if (item.getItemId() == R.id.bear_button) {
+            Intent nextPage = new Intent(this, BearActivity.class);
+            startActivity(nextPage);
 
-        return true;
+        } else if (item.getItemId() == R.id.currency_button) {
+            Intent nextPage2 = new Intent(this, CurrencyConverterActivity.class);
+            startActivity(nextPage2);
+
+        } else if (item.getItemId() == R.id.trivia_button) {
+            Intent nextPage3 = new Intent(this, TriviaActivity.class);
+            startActivity(nextPage3);
+
+        } else if (item.getItemId() == R.id.about) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
+            builder.setTitle("Who Created this! ")
+                    .setMessage("Version 1.0, created by Olivie Bergeron")
+                    .setPositiveButton("OKiii", (dialog, cl) -> {
+                    })
+                    .create().show();
+
+        } else if (item.getItemId() == R.id.howID) {
+            AlertDialog.Builder builder2 = new AlertDialog.Builder(AviationTrackerActivity.this);
+            builder2.setTitle(" How To?")
+                    .setMessage("Just type an airport code to get your data")
+                    .setPositiveButton("OKiii", (dialog, cl) -> {
+                    })
+                    .create().show();
+        }
+        return false;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         binding = ActivityAviationTrackerBinding.inflate(getLayoutInflater());
+
+
 
         setContentView(binding.getRoot());
 
@@ -125,15 +136,21 @@ public class AviationTrackerActivity extends AppCompatActivity {
         String savedCode = sharedPreferences.getString(REQ_CODE,"");
         binding.editTextText.setText(savedCode);
 
+
+
+
+//        ATViewModel.selectedRequest.observe(this, (newValue) -> {
+//
+//            FragmentManager fMgr = getSupportFragmentManager();
+//            FragmentTransaction tx = fMgr.beginTransaction();
+//            FlightRequestDetails mdf = new FlightRequestDetails(newValue);
+//            tx.replace(R.id.fragLocation, mdf);
+//            tx.addToBackStack("");
+//            tx.commit();
+//        });
         ATViewModel.selectedRequest.observe(this, (newValue) -> {
-            FragmentManager fMgr = getSupportFragmentManager();
-            FragmentTransaction tx = fMgr.beginTransaction();
-            FlightRequestDetails mdf = new FlightRequestDetails(newValue);
-            tx.replace(R.id.fragLocation, mdf);
-            tx.addToBackStack("");
-            tx.commit();
-
-
+            FlightRequestDetails dialogFragment = new FlightRequestDetails(newValue);
+            dialogFragment.show(getSupportFragmentManager(), "FlightRequestDetailsDialog");
         });
 
 
@@ -285,6 +302,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 int position = getAbsoluteAdapterPosition();
                 FlightRequest m = requests.get(position);
                 ATViewModel.selectedRequest.postValue(m);
+
 
 //                FragmentManager fMgr = getSupportFragmentManager();
 //                FragmentTransaction tx = fMgr.beginTransaction();
