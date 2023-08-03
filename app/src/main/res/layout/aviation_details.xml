@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="320dp"
+        android:layout_height="169dp"
+        android:outlineAmbientShadowColor="@color/black"
+        app:cardBackgroundColor="@color/PrimaryColor"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp">
+
+            <LinearLayout
+                android:layout_width="293dp"
+                android:layout_height="147dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/detFlightID"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="flightNumber" />
+
+                <TextView
+                    android:id="@+id/detDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="date" />
+
+                <TextView
+                    android:id="@+id/detStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="flightStatus" />
+
+                <TextView
+                    android:id="@+id/departureAirport"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="departureAirport" />
+
+                <TextView
+                    android:id="@+id/ArrivalAirport"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="ArrivalAirport" />
+
+                <TextView
+                    android:id="@+id/airlineName"
+                    android:layout_width="match_parent"
+                    android:layout_height="23dp"
+                    android:text="airlineName" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
