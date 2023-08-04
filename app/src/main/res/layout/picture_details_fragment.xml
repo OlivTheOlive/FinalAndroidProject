@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:text="HEIGHT GOES HERE"
+        android:text="@string/place_height"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="WIDTH GOES HERE"
+        android:text="@string/place_height"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/heightFragment"
         app:layout_constraintTop_toBottomOf="@+id/heightFragment" />
 
@@ -31,7 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:text="FILE NAME GOES HERE"
+        android:text="@string/place_file"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/widthFragment"
         app:layout_constraintTop_toBottomOf="@+id/widthFragment" />
 

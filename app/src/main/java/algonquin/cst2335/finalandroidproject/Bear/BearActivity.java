@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -56,7 +54,6 @@ import algonquin.cst2335.finalandroidproject.Currency.CurrencyConverterActivity;
 import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.Trivia.TriviaActivity;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityBearBinding;
-import algonquin.cst2335.finalandroidproject.databinding.BearPictureBinding;
 
 public class BearActivity extends AppCompatActivity {
 
@@ -73,11 +70,12 @@ public class BearActivity extends AppCompatActivity {
     Bitmap image;
     BearPictureDAO myDAO;
     static int position;
+    Context context = this;
 
     public static ArrayList<BearPicture> pictures;
 
 
-    private RecyclerView.Adapter myAdapter;
+    RecyclerView.Adapter myAdapter;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,9 +111,7 @@ public class BearActivity extends AppCompatActivity {
                 List<BearPicture> fromDatabase = myDAO.getAllPictures();
                 pictures.addAll(fromDatabase);
 
-                runOnUiThread(() -> {
-                    binding.recyclerView2.setAdapter(myAdapter);
-                });
+                runOnUiThread(() -> binding.recyclerView2.setAdapter(myAdapter));
             });
 
         }
@@ -146,13 +142,10 @@ public class BearActivity extends AppCompatActivity {
                             bearPic = width + "-" + height;
 
 
-                            ImageRequest imgReq = new ImageRequest(removePNG, new Response.Listener<Bitmap>() {
-                                @Override
-                                public void onResponse(Bitmap bitmap) {
-                                    image = bitmap;
-                                    binding.theBear.setImageBitmap(image);
+                            ImageRequest imgReq = new ImageRequest(removePNG, bitmap -> {
+                                image = bitmap;
+                                binding.theBear.setImageBitmap(image);
 
-                                }
                             }, 1024, 1024, ImageView.ScaleType.CENTER, null,
                                     (error) -> {
                                     });
@@ -209,10 +202,19 @@ public class BearActivity extends AppCompatActivity {
         });
 
         binding.showPictures.setOnClickListener(clk -> {
-            runOnUiThread(()->{
-                binding.recyclerView2.setVisibility(View.VISIBLE);
-            });
+
+            if (binding.showPictures.getText().equals(String.format(getResources().getString(R.string.show_save)))) {
+                runOnUiThread(() -> {
+                    binding.showPictures.setText(String.format(getResources().getString(R.string.hide_save)));
+                    binding.recyclerView2.setVisibility(View.VISIBLE);
+                });
+            } else
+                runOnUiThread(() -> {
+                    binding.showPictures.setText(String.format(getResources().getString(R.string.show_save)));
+                    binding.recyclerView2.setVisibility(View.GONE);
+                });
         });
+
 
 
         binding.recyclerView2.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
@@ -230,9 +232,11 @@ public class BearActivity extends AppCompatActivity {
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
 
                 BearPicture picture = pictures.get(position);
-                String files =  "/data/data/algonquin.cst2335.finalandroidproject/files/" + String.valueOf(picture.getWidth()) + "-" + String.valueOf(picture.getHeight()) + ".png";
+                String files= new File(context.getFilesDir(), picture.getWidth() + "-" + picture.getHeight() + ".png").getPath();
+
                 Bitmap newImage = BitmapFactory.decodeFile(files);
                 holder.imgView.setImageBitmap(newImage);
+
 
             }
 
@@ -275,10 +279,10 @@ public class BearActivity extends AppCompatActivity {
             startActivity(nextPage);
         } else if (item.getItemId() == R.id.delete) {
             AlertDialog.Builder builder = new AlertDialog.Builder( BearActivity.this );
-            builder.setMessage("Do you want to delete this message? " )
-                    .setTitle("Question:")
-                    .setNegativeButton("No", (dialog,cl) ->{})
-                    .setPositiveButton("Yes", (dialog,cl) ->{
+            builder.setMessage(String.format(getResources().getString(R.string.ask_delete)))
+                    .setTitle(String.format(getResources().getString(R.string.question)))
+                    .setNegativeButton(String.format(getResources().getString(R.string.no)), (dialog,cl) ->{})
+                    .setPositiveButton(String.format(getResources().getString(R.string.yes)), (dialog,cl) ->{
                         BearPicture m = pictures.get(position);
                         Executor thread3 = Executors.newSingleThreadExecutor();
                         thread3.execute(() -> {
@@ -306,6 +310,7 @@ public class BearActivity extends AppCompatActivity {
                  BearActivity.pictureModel.selectedPicture.postValue(selected);
 
                     });
+
         }
 
 

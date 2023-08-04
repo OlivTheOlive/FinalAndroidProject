@@ -18,4 +18,14 @@
     <string name="done">Fait</string>
     <string name="bear_size">Taille de l\'image de l\'ours: </string>
     <string name="undo">Annuler</string>
+
+    <string name="show_save">Afficher les images enregistrées</string>
+    <string name="hide_save">Masquer les images enregistrées</string>
+    <string name="ask_delete">Voulez-vous supprimer ce message?</string>
+    <string name="place_height">LA HAUTEUR VA ICI</string>
+    <string name="place_width">LA LARGEUR VA ICI</string>
+    <string name="place_file">LE NOM DU FICHIER VA ICI</string>
+    <string name="frag_height">Hauteur: </string>
+    <string name="frag_width">Largeur: </string>
+    <string name="frag_file">Nom de fichier: </string>
 </resources>
