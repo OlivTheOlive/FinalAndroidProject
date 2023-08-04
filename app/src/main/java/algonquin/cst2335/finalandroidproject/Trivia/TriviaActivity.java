@@ -5,9 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -52,7 +57,7 @@ public class TriviaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         variableBinding = ActivityTriviaBinding.inflate(getLayoutInflater());
         setContentView(variableBinding.getRoot());
-    //    setContentView(binding.getRoot());
+        //    setContentView(binding.getRoot());
         setSupportActionBar(variableBinding.myToolbar);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
@@ -60,58 +65,58 @@ public class TriviaActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
 
-
         variableBinding.animalButton.setOnClickListener(clk -> {
 
-                    String numQuestions = variableBinding.editTextNumber.getText().toString();
-                    String url = "https://opentdb.com/api.php?amount=" + numQuestions + "&category=27&type=multiple";
+            String numQuestions = variableBinding.editTextNumber.getText().toString();
+            String url = "https://opentdb.com/api.php?amount=" + numQuestions + "&category=27&type=multiple";
 
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    Log.d("Network Response", "Response received!");
-                                    try {
-                                        JSONArray results = response.getJSONArray("results");
-                                        int length = results.length();
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("Network Response", "Response received!");
+                            try {
+                                JSONArray results = response.getJSONArray("results");
+                                int length = results.length();
 
-                                        for (int i = 0; i < length; i++) {
-                                            JSONObject question = results.getJSONObject(i);
-                                            String questionString = question.getString("question");
-                                            String correctAnswer = question.getString("correct_answer");
-                                            JSONArray incorrectAnswers = question.getJSONArray("incorrect_answers");
-                                            int incorrectLength = incorrectAnswers.length();
-                                            ArrayList<String> incorrectTexts = new ArrayList<>();
-                                            for (int j = 0; j < incorrectLength; j++) {
-                                                incorrectTexts.add(incorrectAnswers.getString(j));
-                                            }
-                                            int q = 0;
-                                            questions.add(new QuestionObj(questionString, correctAnswer, incorrectTexts));
-
-                                        }
-                                     //   myAdapter.notifyDataSetChanged();
-                                        Intent intent = new Intent(TriviaActivity.this, QuizActivity.class);
-                                        intent.putExtra("questions", questions);
-                                        startActivity(intent);
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                        Log.e("JSON Parsing Error", "Error parsing JSON response: " + e.getMessage());
+                                for (int i = 0; i < length; i++) {
+                                    JSONObject question = results.getJSONObject(i);
+                                    String questionString = question.getString("question");
+                                    String correctAnswer = question.getString("correct_answer");
+                                    JSONArray incorrectAnswers = question.getJSONArray("incorrect_answers");
+                                    int incorrectLength = incorrectAnswers.length();
+                                    ArrayList<String> incorrectTexts = new ArrayList<>();
+                                    for (int j = 0; j < incorrectLength; j++) {
+                                        incorrectTexts.add(incorrectAnswers.getString(j));
                                     }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("Network Error", "Error response: " + error.toString());
-                                }
-                            });
+                                    int q = 0;
+                                    questions.add(new QuestionObj(questionString, correctAnswer, incorrectTexts));
 
-                    requestQueue.add(request);
-                });
+                                }
+                                //   myAdapter.notifyDataSetChanged();
+                                Intent intent = new Intent(TriviaActivity.this, QuizActivity.class);
+                                intent.putExtra("questions", questions);
+                                startActivity(intent);
 
-            variableBinding.geographyButton.setOnClickListener(clk ->  { String numQuestions = variableBinding.editTextNumber.getText().toString();
-            String url  = "https://opentdb.com/api.php?amount=" + numQuestions + "&category=27&type=multiple";
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("JSON Parsing Error", "Error parsing JSON response: " + e.getMessage());
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("Network Error", "Error response: " + error.toString());
+                        }
+                    });
+
+            requestQueue.add(request);
+        });
+
+        variableBinding.geographyButton.setOnClickListener(clk -> {
+            String numQuestions = variableBinding.editTextNumber.getText().toString();
+            String url = "https://opentdb.com/api.php?amount=" + numQuestions + "&category=27&type=multiple";
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
@@ -128,7 +133,7 @@ public class TriviaActivity extends AppCompatActivity {
                                     JSONArray incorrectAnswers = question.getJSONArray("incorrect_answers");
                                     int incorrectLength = incorrectAnswers.length();
                                     ArrayList<String> incorrectTexts = new ArrayList<>();
-                                    for(int j=0; j < incorrectLength; j++ ){
+                                    for (int j = 0; j < incorrectLength; j++) {
                                         incorrectTexts.add(incorrectAnswers.getString(j));
                                     }
                                     int q = 0;
@@ -157,15 +162,13 @@ public class TriviaActivity extends AppCompatActivity {
                     });
 
 
-
             // Retrieve saved user input and populate the EditText
-        String savedUserInput = sharedPreferences.getString("userInputKey", "");
-    //    variableBinding.editTextNumber.setText(savedUserInput);
+            String savedUserInput = sharedPreferences.getString("userInputKey", "");
+            //    variableBinding.editTextNumber.setText(savedUserInput);
 
-    });
+        });
 
-        }
-
+    }
 
 
     // Outside the click listeners, define the method to start the new activity
@@ -197,6 +200,57 @@ public class TriviaActivity extends AppCompatActivity {
 
         }
         return false;
+
+        class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
+
+            private ArrayList<QuestionObj> questions;
+
+            public QuestionAdapter(ArrayList<QuestionObj> questions) {
+                this.questions = questions;
+            }
+
+            @NonNull
+            @Override
+            public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_questions, parent, false);
+                return new QuestionViewHolder(itemView);
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
+                QuestionObj question = questions.get(position);
+                holder.bindQuestion(question);
+            }
+
+            @Override
+            public int getItemCount() {
+                return questions.size();
+            }
+
+             class QuestionViewHolder extends RecyclerView.ViewHolder {
+
+                private TextView questionTextView;
+                private TextView correctAnswerTextView;
+                private TextView incorrectAnswersTextView;
+
+                public QuestionViewHolder(@NonNull View itemView) {
+                    super(itemView);
+                    questionTextView = itemView.findViewById(R.id.questionTextView);
+                    correctAnswerTextView = itemView.findViewById(R.id.answersRadioGroup);
+                    incorrectAnswersTextView = itemView.findViewById(R.id.answerRadioButton1);
+                    incorrectAnswersTextView = itemView.findViewById(R.id.answerRadioButton2);
+                    incorrectAnswersTextView = itemView.findViewById(R.id.answerRadioButton3);
+                    incorrectAnswersTextView = itemView.findViewById(R.id.answerRadioButton4);
+                }
+
+                public void bindQuestion(QuestionObj question) {
+                    questionTextView.setText(question.getQuestionString());
+                    correctAnswerTextView.setText("Correct Answer: " + question.getCorrectAnswer());
+                    incorrectAnswersTextView.setText("Incorrect Answers: " + question.getIncorrectAnswers().toString());
+                }
+            }
+        }
+
 
     }
 
