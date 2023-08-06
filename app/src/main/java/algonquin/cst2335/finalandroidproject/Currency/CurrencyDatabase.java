@@ -17,7 +17,7 @@ public abstract class CurrencyDatabase extends RoomDatabase {
 
     public abstract CurrencyDAO cDAO();
 
-    static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+    static final Migration MIGRATION_2_6 = new Migration(2, 6) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             // Add the new column 'conversionResult' to 'CurrencySelected' table
@@ -29,7 +29,7 @@ public abstract class CurrencyDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             CurrencyDatabase.class, "currencyDatabase")
-                    .addMigrations(MIGRATION_5_6) // Add the migration here
+                    .addMigrations(MIGRATION_2_6) // Add the migration here
                     .build();
         }
         return instance;
