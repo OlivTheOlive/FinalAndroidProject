@@ -23,7 +23,7 @@ public class CurrencyDetailsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         CurrencyDetailsLayoutBinding binding = CurrencyDetailsLayoutBinding.inflate(inflater);
 
-        binding.conversionResult.setText(selected.getConversion());
+        binding.conversionResult.setText(selected.getConversionResult());
         binding.time.setText(selected.getTime());
         binding.id.setText(selected.id);
 

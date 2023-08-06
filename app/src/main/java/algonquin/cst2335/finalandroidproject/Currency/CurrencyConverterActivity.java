@@ -218,32 +218,19 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         CurrencySelected selected = currencyViewModel.selectAmount.getValue();
         TextView amountInput = findViewById(R.id.amountInput);
 
-        if(item.getItemId() == R.id.deleteCurrency){
-
+        if (item.getItemId() == R.id.deleteCurrency) {
             AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
             builder.setTitle("Currency History Delete")
                     .setMessage("Please confirm you want to delete this history")
                     .setNegativeButton("No", (dialog, clk) -> {})
                     .setPositiveButton("Yes", (dialog, clk) -> {
-                        Executor thread = Executors.newSingleThreadExecutor();
-                        int position = myAdapter.conversionResultsList.indexOf(selected);
-                        CurrencySelected m = myAdapter.conversionResultsList.get(position);
-                        thread.execute(()->{
-                            currencyDAO.deleteAmount(m);
-                        });
-
-                        myAdapter.conversionResultsList.remove(position);
-                        myAdapter.notifyItemRemoved(position);
-                        Snackbar.make(amountInput, "You deleted message #" + position, Snackbar.LENGTH_LONG)
-                                .setAction("Undo", click -> {
-                                    myAdapter.conversionResultsList.add(position, m);
-                                    runOnUiThread(() -> myAdapter.notifyItemInserted(position));
-                                })
-                                .show();
-                        onBackPressed();
-                    }).create().show();
-
-        } else if (item.getItemId() == R.id.about){
+                        // Pass the selected item to CurrencyHistory activity
+                        currencyViewModel.selectAmount.setValue(selected);
+                        Intent nextPage = new Intent(CurrencyConverterActivity.this, CurrencyHistory.class);
+                        startActivity(nextPage);
+                    })
+                    .create().show();
+        }else if (item.getItemId() == R.id.about){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
             builder.setTitle("How to use the application")

@@ -1,13 +1,29 @@
 package algonquin.cst2335.finalandroidproject.Currency;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.room.Database;
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {CurrencySelected.class}, version = 3)
 public abstract class CurrencyDatabase extends RoomDatabase {
+
+    private static CurrencyDatabase instance;
+
+    public static synchronized CurrencyDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(
+                    context.getApplicationContext(),
+                    CurrencyDatabase.class,
+                    "currency_database"
+            ).build();
+        }
+        return instance;
+    }
 
     public abstract CurrencyDAO cDAO();
 

@@ -3,16 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/trivia"
         android:icon="@drawable/trivia"
-        android:title="Bear"
+        android:title="trivia"
         app:showAsAction="always" />
     <item
+        android:id="@+id/plane"
         android:icon="@drawable/plane"
-        android:title="Aviation"
+        android:title="plane"
         app:showAsAction="always" />
     <item
+        android:id="@+id/bear"
         android:icon="@drawable/bear"
-        android:title="Trivia"
+        android:title="bear"
         app:showAsAction="always" />
     <item
         android:id="@+id/deleteCurrency"
@@ -21,4 +24,8 @@
     <item
         android:id="@+id/about"
         android:title="@string/about" />
+    <item
+        android:id="@+id/history"
+        android:title="History"
+        app:showAsAction="never" />
 </menu>

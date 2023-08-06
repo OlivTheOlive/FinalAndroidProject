@@ -6,57 +6,30 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/CAD"
+        android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/CAD"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="35dp"
+        android:text="Database id goes here"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/CADAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="CADAmount"
-        app:layout_constraintStart_toStartOf="@+id/CAD"
-        app:layout_constraintTop_toBottomOf="@+id/CAD" />
-
-    <TextView
-        android:id="@+id/FF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/FF"
-        app:layout_constraintStart_toStartOf="@+id/CADAmount"
-        app:layout_constraintTop_toBottomOf="@+id/CADAmount" />
-
-    <TextView
-        android:id="@+id/FFAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="FFAmount"
-        app:layout_constraintStart_toStartOf="@+id/FF"
-        app:layout_constraintTop_toBottomOf="@+id/FF" />
 
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Time goes here"
-        app:layout_constraintStart_toStartOf="@+id/FFAmount"
-        app:layout_constraintTop_toBottomOf="@+id/FFAmount" />
+        android:layout_marginTop="35dp"
+        android:text="time goes here"
+        app:layout_constraintStart_toStartOf="@+id/conversionResult"
+        app:layout_constraintTop_toBottomOf="@+id/conversionResult" />
 
     <TextView
-        android:id="@+id/id"
+        android:id="@+id/conversionResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Database id goes here"
-        app:layout_constraintStart_toStartOf="@+id/time"
-        app:layout_constraintTop_toBottomOf="@+id/time" />
+        android:layout_marginTop="35dp"
+        android:text="conversionResult goes here"
+        app:layout_constraintStart_toStartOf="@+id/id"
+        app:layout_constraintTop_toBottomOf="@+id/id" />
 </androidx.constraintlayout.widget.ConstraintLayout>

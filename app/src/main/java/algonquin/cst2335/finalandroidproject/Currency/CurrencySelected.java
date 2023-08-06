@@ -28,7 +28,7 @@ public class CurrencySelected{
     }
 
 
-    public String conversionResult(){
+    public String getConversionResult(){
         return conversionResult;
     }
 
