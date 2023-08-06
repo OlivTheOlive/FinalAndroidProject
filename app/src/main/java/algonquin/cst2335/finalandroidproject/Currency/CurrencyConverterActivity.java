@@ -268,7 +268,7 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
             startActivity(nextPage);
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
 
     }
 

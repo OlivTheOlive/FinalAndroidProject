@@ -199,6 +199,7 @@ public class CurrencyHistory extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.currency_menu, menu);

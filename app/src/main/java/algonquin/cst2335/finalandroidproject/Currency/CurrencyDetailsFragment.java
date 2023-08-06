@@ -9,27 +9,28 @@ import androidx.fragment.app.Fragment;
 
 import algonquin.cst2335.finalandroidproject.databinding.CurrencyDetailsLayoutBinding;
 
-/**
- * @author Hanna Felix
- */
 public class CurrencyDetailsFragment extends Fragment {
 
-    CurrencySelected selected;
+    private CurrencySelected selected;
 
-    public CurrencyDetailsFragment( CurrencySelected c ) {selected = c; }
+    public CurrencyDetailsFragment(CurrencySelected c) {
+        selected = c;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        super.onCreateView(inflater, container, savedInstanceState);
-        CurrencyDetailsLayoutBinding binding = CurrencyDetailsLayoutBinding.inflate(inflater);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        CurrencyDetailsLayoutBinding binding = CurrencyDetailsLayoutBinding.inflate(inflater, container, false);
 
         binding.conversionResult.setText(selected.getConversionResult());
         binding.time.setText(selected.getTime());
-        binding.id.setText(selected.id);
+        binding.id.setText(String.valueOf(selected.id));
 
         return binding.getRoot();
-
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+       // binding = null;  Detach the binding
+    }
 }

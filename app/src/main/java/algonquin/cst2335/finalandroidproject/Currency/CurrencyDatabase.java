@@ -20,8 +20,6 @@ public abstract class CurrencyDatabase extends RoomDatabase {
     static final Migration MIGRATION_2_6 = new Migration(2, 6) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("DROP TABLE `CurrencySelected`");
-
             database.execSQL("CREATE TABLE IF NOT EXISTS `CurrencySelected` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     "`conversionResult` TEXT, `time` TEXT )");
         }
