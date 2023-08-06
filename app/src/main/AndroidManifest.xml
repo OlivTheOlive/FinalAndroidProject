@@ -18,6 +18,9 @@
             android:name=".Currency.CurrencyConverterActivity"
             android:exported="true" />
         <activity
+            android:name="algonquin.cst2335.finalandroidproject.Currency.CurrencyHistory"
+            android:exported="true" />
+        <activity
             android:name=".Trivia.TriviaActivity"
             android:exported="false" />
         <activity

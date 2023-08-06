@@ -17,6 +17,12 @@
     <string name="get_flight_btn">Get Data</string>
     <string name="edit_aviation">3 letter code pls</string>
 
+    <string name="from">From</string>
+    <string name="to">To</string>
+
+    <string name="amount">Please Enter Amount</string>
+
+
     <string-array name="country1">
         <item>CAD</item>
         <item>PHP</item>

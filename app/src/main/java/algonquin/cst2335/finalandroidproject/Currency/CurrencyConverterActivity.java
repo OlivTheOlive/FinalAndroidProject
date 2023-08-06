@@ -85,15 +85,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
     CurrencySelected currencySelected = new CurrencySelected();
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-
-        setSupportActionBar(binding.currencyToolbar);
-        getMenuInflater().inflate(R.menu.currency_menu, menu);
-        return true;
-    }
-
-    @Override
     @SuppressLint("NotifyDataSetChange")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +95,8 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         binding = ActivityCurrencyConverterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //Context context;
+        setSupportActionBar(binding.currencyToolbar);
+
 
         if (binding.amountInput == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -210,10 +202,21 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.currency_menu, menu);
+
+        return true;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         setSupportActionBar(binding.currencyToolbar);
+        CurrencyViewModel currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
+
 
         CurrencySelected selected = currencyViewModel.selectAmount.getValue();
         TextView amountInput = findViewById(R.id.amountInput);
