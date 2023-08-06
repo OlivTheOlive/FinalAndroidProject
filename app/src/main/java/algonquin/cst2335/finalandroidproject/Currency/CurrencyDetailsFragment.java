@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 
 import algonquin.cst2335.finalandroidproject.databinding.CurrencyDetailsLayoutBinding;
 
+/**
+ * @author Hanna Felix
+ */
 public class CurrencyDetailsFragment extends Fragment {
 
     CurrencySelected selected;
@@ -20,11 +23,8 @@ public class CurrencyDetailsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         CurrencyDetailsLayoutBinding binding = CurrencyDetailsLayoutBinding.inflate(inflater);
 
-
-        binding.CAD.setText("CAD");
-        binding.CADAmount.setText(selected.amountConverted);
-        binding.FF.setText("FF");
-        binding.FFAmount.setText(selected.amountCov);
+        binding.conversionResult.setText(selected.getConversion());
+        binding.time.setText(selected.getTime());
         binding.id.setText(selected.id);
 
         return binding.getRoot();

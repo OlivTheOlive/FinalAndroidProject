@@ -16,4 +16,27 @@
     <string name="width">Width</string>
     <string name="get_flight_btn">Get Data</string>
     <string name="edit_aviation">3 letter code pls</string>
+
+    <string-array name="country1">
+        <item>CAD</item>
+        <item>PHP</item>
+        <item>EUR</item>
+        <item>INR</item>
+        <item>HK</item>
+        <item>KGS</item>
+        <item>MAD</item>
+        <item>JPY</item>
+    </string-array>
+
+
+    <string-array name="country1">
+        <item>CAD</item>
+        <item>PHP</item>
+        <item>EUR</item>
+        <item>INR</item>
+        <item>HK</item>
+        <item>KGS</item>
+        <item>MAD</item>
+        <item>JPY</item>
+    </string-array>
 </resources>

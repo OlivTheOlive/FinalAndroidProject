@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class CurrencyViewModel extends ViewModel {
 
-    public MutableLiveData<ArrayList<CurrencySelected>> amountCov = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<CurrencySelected>> conversionResultsList = new MutableLiveData<>();
 
     public MutableLiveData<CurrencySelected> selectAmount = new MutableLiveData<>();
 }

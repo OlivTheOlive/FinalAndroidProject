@@ -6,13 +6,13 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {CurrencySelected.class}, version = 2)
+@Database(entities = {CurrencySelected.class}, version = 3)
 public abstract class CurrencyDatabase extends RoomDatabase {
 
     public abstract CurrencyDAO cDAO();
 
     // Add the migration here
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    static final Migration MIGRATION_1_2 = new Migration(1, 3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             // Write your migration SQL code here.
