@@ -6,21 +6,18 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class CurrencySelected{
+public class CurrencySelected {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="id")
-
+    @ColumnInfo(name = "id")
     public int id;
 
-    @ColumnInfo(name="conversionResult")
+    @ColumnInfo(name = "conversionResult")
     String conversionResult;
 
-
-    @ColumnInfo(name="time")
+    @ColumnInfo(name = "time")
     String time;
 
-    public CurrencySelected(){}
-
+    public CurrencySelected() {}
 
     CurrencySelected(String a, String b ){
         conversionResult = a;
