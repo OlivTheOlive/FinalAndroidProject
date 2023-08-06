@@ -167,10 +167,16 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                                 SimpleDateFormat time = new SimpleDateFormat("EEEE, dd-MM-yyyy hh-mm-ss a");
                                 String timeCov = time.format(new Date());
                                 CurrencySelected convert = new CurrencySelected(binding.conversionResult.getText().toString(), timeCov);
+
                                 Executors.newSingleThreadExecutor().execute(new Runnable() {
                                     @Override
                                     public void run() {
                                         currencyDatabase.cDAO().insertAmount(convert);
+
+                                        Intent nextPage = new Intent(CurrencyConverterActivity.this, CurrencyHistory.class);
+                                        nextPage.putExtra("conversion_result", convert.getConversionResult());
+                                        nextPage.putExtra("time", convert.getTime());
+                                        startActivity(nextPage);
                                     }
                                 });
 
@@ -218,7 +224,7 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         CurrencyViewModel currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
 
 
-        CurrencySelected selected = currencyViewModel.selectAmount.getValue();
+        CurrencySelected selected = currencyViewModel.getSelectedAmount().getValue();
         TextView amountInput = findViewById(R.id.amountInput);
 
         if (item.getItemId() == R.id.deleteCurrency) {
@@ -228,7 +234,7 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                     .setNegativeButton("No", (dialog, clk) -> {})
                     .setPositiveButton("Yes", (dialog, clk) -> {
                         // Pass the selected item to CurrencyHistory activity
-                        currencyViewModel.selectAmount.setValue(selected);
+                        currencyViewModel.setSelectedAmount(selected);
                         Intent nextPage = new Intent(CurrencyConverterActivity.this, CurrencyHistory.class);
                         startActivity(nextPage);
                     })
@@ -256,9 +262,13 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         } else if (item.getItemId() == R.id.trivia){
             Intent nextPage = new Intent(this, TriviaActivity.class);
             startActivity(nextPage);
+
+        } else if (item.getItemId() == R.id.convert){
+            Intent nextPage = new Intent(this, CurrencyConverterActivity.class);
+            startActivity(nextPage);
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
 
     }
 
