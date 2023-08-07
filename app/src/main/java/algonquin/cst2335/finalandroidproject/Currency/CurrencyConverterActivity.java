@@ -84,6 +84,8 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
     //Import CurrencySelected
     CurrencySelected currencySelected = new CurrencySelected();
 
+
+
     @Override
     @SuppressLint("NotifyDataSetChange")
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,8 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.currencyToolbar);
+
+       // CurrencyViewModel currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
 
 
         if (binding.amountInput == null) {
@@ -158,6 +162,8 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
                                 runOnUiThread(() -> {
 
+
+
                                     String resultText = baseCurrencyCode + "=" + amount + " " + countryTo + "=" + convertedAmount;
                                     binding.conversionResult.setText(resultText);
 
@@ -171,12 +177,15 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                                 Executors.newSingleThreadExecutor().execute(new Runnable() {
                                     @Override
                                     public void run() {
-                                        currencyDatabase.cDAO().insertAmount(convert);
 
-                                        Intent nextPage = new Intent(CurrencyConverterActivity.this, CurrencyHistory.class);
+                                        currencyDatabase.cDAO().insertAmount(convert);
+                                        convert.getConversionResult();
+                                        currencyViewModel.addConversionResult(convert);
+
+                                       /* Intent nextPage = new Intent(CurrencyConverterActivity.this, CurrencyHistory.class);
                                         nextPage.putExtra("conversion_result", convert.getConversionResult());
                                         nextPage.putExtra("time", convert.getTime());
-                                        startActivity(nextPage);
+                                        startActivity(nextPage);*/
                                     }
                                 });
 
@@ -222,10 +231,8 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
     public boolean onOptionsItemSelected(MenuItem item){
         setSupportActionBar(binding.currencyToolbar);
         CurrencyViewModel currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
-
-
         CurrencySelected selected = currencyViewModel.getSelectedAmount().getValue();
-        TextView amountInput = findViewById(R.id.amountInput);
+//
 
         if (item.getItemId() == R.id.deleteCurrency) {
             AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);

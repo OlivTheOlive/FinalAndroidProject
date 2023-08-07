@@ -131,7 +131,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -171,9 +170,10 @@ public class CurrencyHistory extends AppCompatActivity {
         recyclerView.setAdapter(myAdapter);
 
         // Observe changes in the currencyConvertedList LiveData
-        currencyViewModel.getConversionResultsList().observe(this, conversionList -> {
-            myAdapter.updateList(conversionList);
-            myAdapter.notifyDataSetChanged();
+       currencyViewModel.getAllAmount().observe(this, conversionList -> {
+           ArrayList<CurrencySelected> arrayList = new ArrayList<>(conversionList);
+           myAdapter.updateList(arrayList);
+           myAdapter.notifyDataSetChanged();
         });
 
         // Retrieve the selected item from ViewModel and perform deletion if needed
