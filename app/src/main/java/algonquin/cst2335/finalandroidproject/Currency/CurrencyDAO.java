@@ -20,8 +20,7 @@ public interface CurrencyDAO {
     public int updateAmount(CurrencySelected amount);
 
     @Query("Select * from CurrencySelected")
-   // public ArrayList<CurrencySelected> getAllAmount();
-    public List<CurrencySelected> getAllAmount();
+       public List<CurrencySelected> getAllAmount();
 
     @Delete
     public int deleteAmount(CurrencySelected amount);

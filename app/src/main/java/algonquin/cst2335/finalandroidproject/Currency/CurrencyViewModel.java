@@ -14,12 +14,5 @@ public class CurrencyViewModel extends ViewModel {
     public MutableLiveData<ArrayList<CurrencySelected>> conversionResultsList = new MutableLiveData<>();
     public MutableLiveData<CurrencySelected> selectedAmount = new MutableLiveData<>();
 
-     public MutableLiveData<CurrencySelected> getSelectedAmount() {
-        return selectedAmount;
-    }
-
-    public void setSelectedAmount(CurrencySelected amount) {
-        selectedAmount.setValue(amount);
-    }
 
 }
