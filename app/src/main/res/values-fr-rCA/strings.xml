@@ -8,6 +8,24 @@
     <string name="bear_title">Generate Bear Image</string>
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
+
+    <string name="score_text_view">Pointage</string>
+    <string name="leaderBoard">Voir le tableau des leaders</string>
+    <string name="qstion">Question</string>
+    <string name="player_name">Nom du joueur</string>
+    <string name="score">Pointage</string>
+    <string name="category">Catégorie</string>
+    <string name="id">Id</string>
+    <string name="delete_button">supprimer</string>
+    <string name="strtquiz">Démarrer le quiz?</string>
+    <string name="usrname">Nom d’utilisateur</string>
+    <string name="question">Sélectionner le nombre de questions</string>
+    <string name="geographyButton">Générer une question géographique</string>
+    <string name="animalButton">Générer une question animale</string>
+    <string name="quizDoneButton">Soumettez des réponses!</string>
+    <string name="question1">La Question Va Ici</string>
+    <string name="answer">La réponse va ici</string>
+
     <string name="get_flight_btn">Obtenir données</string>
     <string name="edit_aviation">code 3 lettres svp</string>
     <string name="save">Enregistrer</string>
@@ -21,4 +39,5 @@
     <string name="arrivalAirport">"Aéroport d'arrivée: "</string>
     <string name="airlineName">Nom de la compagnie :</string>
     <string name="saveState">Non enregistré</string>
+
 </resources>
