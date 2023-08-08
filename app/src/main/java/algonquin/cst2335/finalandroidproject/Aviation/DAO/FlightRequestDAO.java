@@ -19,6 +19,8 @@ public interface FlightRequestDAO {
         List<FlightRequest> getAllMessage();
         @Delete
         void deleteCode(FlightRequest m);
+        @Query("SELECT EXISTS(SELECT 1 FROM FlightRequest WHERE flightId = :flightId LIMIT 1)")
+        boolean isFlightIdExists(String flightId);
 
     }
 

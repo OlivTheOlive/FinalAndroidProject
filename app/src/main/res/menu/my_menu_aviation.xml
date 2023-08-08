@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="about" />
+
+    <item
+        android:id="@+id/howID"
+        android:title="HowTO" />
+    <item
+        android:id="@+id/saved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Show Saved" />
+    <item
+        android:id="@+id/bear1"
+        android:icon="@drawable/bear_generator_icon"
+        android:title="@string/bear_title"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/trivia1"
+        android:icon="@drawable/trivia_generator"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/currency_converter_1"
+        android:icon="@drawable/currency_converator_image"
+        android:title="Item"
+        app:showAsAction="always" />
+</menu>
