@@ -9,6 +9,11 @@
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
 
+    <string name="txt_edit1">Entrer le montant</string>
+    <string name="dCurrency">effacer</string>
+    <string name="about">Comment utiliser</string>
+
+
     <string name="score_text_view">Pointage</string>
     <string name="leaderBoard">Voir le tableau des leaders</string>
     <string name="qstion">Question</string>
@@ -39,5 +44,6 @@
     <string name="arrivalAirport">"Aéroport d'arrivée: "</string>
     <string name="airlineName">Nom de la compagnie :</string>
     <string name="saveState">Non enregistré</string>
+
 
 </resources>
