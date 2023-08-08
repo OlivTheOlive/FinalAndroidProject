@@ -23,7 +23,7 @@ public class CurrencyDetailsFragment extends Fragment {
 
         binding.conversionResult.setText(selected.getConversionResult());
         binding.time.setText(selected.getTime());
-        binding.id.setText(String.valueOf(selected.id));
+        binding.id.setText(String.valueOf("Id = " + selected.id));
 
         return binding.getRoot();
     }

@@ -27,6 +27,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -233,8 +234,16 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
             binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            }
+            currencyViewModel.selectedAmount.observe(this,(newCurrencyValue)-> {
+                CurrencyDetailsFragment currencyFragment = new CurrencyDetailsFragment( newCurrencyValue );
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLocation, currencyFragment)
+                        .addToBackStack("")
+                        .commit();
+            });
 
+            }
 
     }
 
@@ -288,7 +297,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
     public boolean onOptionsItemSelected(MenuItem item){
 
         currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
-        CurrencySelected selected = currencyViewModel.selectedAmount.getValue();
 
         if (item.getItemId() == R.id.deleteCurrency) {
             AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
@@ -296,12 +304,39 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                     .setMessage("Please confirm you want to delete this history")
                     .setNegativeButton("No", (dialog, clk) -> {})
                     .setPositiveButton("Yes", (dialog, clk) -> {
+
+                        int position = item.getOrder();
+                        CurrencySelected currencyRemove = conversionResultsList.get(position);
+                        conversionResultsList.remove(position);
+                        myAdapter.notifyItemRemoved(position);
+
+                        Executor thread = Executors.newSingleThreadExecutor();
+                        thread.execute(() -> {
+                            myDAO.deleteAmount(currencyRemove);
+                        });
+
+                        Snackbar.make( binding.convert, "You deleted message #" + position, Snackbar.LENGTH_LONG)
+                                .setAction("Undo", (click)-> {
+                                    /*conversionResultsList.add(position, currencyRemove);
+                                    myAdapter.notifyItemInserted(position);*/
+
+                                    Executor thread2 = Executors.newSingleThreadExecutor();
+                                    thread2.execute(() -> {
+                                        myDAO.insertAmount(currencyRemove);
+                                        conversionResultsList.add(position,currencyRemove);
+                                        runOnUiThread(()->myAdapter.notifyDataSetChanged());
+                                    });
+                                })
+                                .show();
+                    })
+                    .create().show();
+
+
                        /* // Pass the selected item to CurrencyHistory activity
                         currencyViewModel.setSelectedAmount(selected);
                         Intent nextPage = new Intent(CurrencyConverterActivity.this);
                         startActivity(nextPage);*/
-                    })
-                    .create().show();
+
         }else if (item.getItemId() == R.id.about){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
