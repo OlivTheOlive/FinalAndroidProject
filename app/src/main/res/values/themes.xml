@@ -4,7 +4,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- Customize your light theme here. -->
-
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
 
 
@@ -12,8 +11,11 @@
         <item name="windowNoTitle">true</item>
          <item name="colorPrimary">#F400A1</item>
 
-    </style>
 
+        <item name="colorPrimary"> @color/PrimaryColor</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="Theme.FinalAndroidProject" parent="Base.Theme.FinalAndroidProject" />
 </resources>
