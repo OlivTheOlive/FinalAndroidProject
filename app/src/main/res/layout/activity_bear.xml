@@ -10,17 +10,20 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6750A4"
+        android:background="#F0EAD6"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints"></androidx.appcompat.widget.Toolbar>
 
     <EditText
         android:id="@+id/widthEditText"
-        android:layout_width="182dp"
+        android:layout_width="200dp"
         android:layout_height="39dp"
         android:ems="10"
         android:hint="@string/width"
         android:inputType="number"
+        android:drawableStart="@drawable/baseline_width"
+        android:drawablePadding="12dp"
+        android:background="@drawable/edit_text_style"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
@@ -33,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bear_title"
+        android:textSize="20dp"
+        android:fontFamily="sans-serif-black"
         app:layout_constraintBottom_toTopOf="@+id/heightEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.451"
@@ -42,11 +47,15 @@
 
     <EditText
         android:id="@+id/heightEditText"
-        android:layout_width="182dp"
+        android:layout_width="200dp"
         android:layout_height="39dp"
+        android:background="@drawable/edit_text_style"
+
         android:ems="10"
         android:hint="@string/height"
         android:inputType="number"
+        android:drawableStart="@drawable/ic_height"
+        android:drawablePadding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/widthEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
@@ -102,6 +111,7 @@
         android:layout_height="44dp"
         android:layout_marginTop="19dp"
         android:text="Show Saved Images"
+
         app:layout_constraintBottom_toBottomOf="@+id/generateButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/generateButton"

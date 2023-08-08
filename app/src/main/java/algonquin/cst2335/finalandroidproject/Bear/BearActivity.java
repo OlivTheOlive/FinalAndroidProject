@@ -233,7 +233,6 @@ public class BearActivity extends AppCompatActivity {
 
                 BearPicture picture = pictures.get(position);
                 String files= new File(context.getFilesDir(), picture.getWidth() + "-" + picture.getHeight() + ".png").getPath();
-
                 Bitmap newImage = BitmapFactory.decodeFile(files);
                 holder.imgView.setImageBitmap(newImage);
 
