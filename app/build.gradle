@@ -48,6 +48,8 @@ android.applicationVariants.all { variant ->
 
 dependencies {
     implementation 'com.android.volley:volley:1.2.1'
+    def fragment_version = "1.5.7"
+    implementation "androidx.fragment:fragment:$fragment_version"
     def room_version = "2.4.2"
     //noinspection GradleDependency
     implementation "androidx.room:room-runtime:$room_version"

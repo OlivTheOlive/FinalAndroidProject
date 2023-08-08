@@ -13,6 +13,7 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
+
         android:id="@+id/textView"
         android:layout_width="279dp"
         android:layout_height="38dp"
@@ -70,6 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.623"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toTopOf="@+id/myToolbar"
         tools:ignore="MissingConstraints" />
 
@@ -122,6 +124,7 @@
         tools:layout_editor_absoluteX="0dp">
 
     </FrameLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +32,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Delete;
 import androidx.room.Room;
 
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
+import algonquin.cst2335.finalandroidproject.Aviation.AviationTrackerActivity;
+import algonquin.cst2335.finalandroidproject.Bear.BearActivity;
+import algonquin.cst2335.finalandroidproject.Currency.CurrencyConverterActivity;
+import algonquin.cst2335.finalandroidproject.R;
+import algonquin.cst2335.finalandroidproject.databinding.ActivityTriviaBinding;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -84,6 +93,7 @@ public class TriviaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         variableBinding = ActivityTriviaBinding.inflate(getLayoutInflater());
         setContentView(variableBinding.getRoot());
+
         setSupportActionBar(variableBinding.myToolbar);
         FragmentScoresBinding binding = FragmentScoresBinding.inflate(getLayoutInflater());
         ScoreItemBinding variableBindings = ScoreItemBinding.inflate(getLayoutInflater());
@@ -111,7 +121,6 @@ public class TriviaActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         quizModel = new ViewModelProvider(this).get(QuizActivityViewModel.class);
-
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -409,6 +418,7 @@ public class TriviaActivity extends AppCompatActivity {
             holder.categoryTextView.setText(currentScore.getCategory());
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
+
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(holder.itemView.getContext());
                     builder.setTitle("Confirmation")
@@ -444,6 +454,7 @@ public class TriviaActivity extends AppCompatActivity {
                             })
                             .create()
                             .show();
+
                 }
             });
         }
@@ -511,6 +522,4 @@ public class TriviaActivity extends AppCompatActivity {
     }
 
     }
-
-
 
