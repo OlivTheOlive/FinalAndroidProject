@@ -7,5 +7,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <style name="Theme.FinalAndroidProject" parent="Base.Theme.FinalAndroidProject" />
 </resources>

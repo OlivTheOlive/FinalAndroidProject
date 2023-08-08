@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.widget.Toolbar;
 
 import algonquin.cst2335.finalandroidproject.Aviation.AviationTrackerActivity;
 import algonquin.cst2335.finalandroidproject.Bear.BearActivity;
@@ -37,4 +39,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(nextPage);
         });
     }
+
+
+
+
 }
