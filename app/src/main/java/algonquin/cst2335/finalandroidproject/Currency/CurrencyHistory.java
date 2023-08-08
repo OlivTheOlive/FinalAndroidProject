@@ -131,26 +131,52 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import algonquin.cst2335.finalandroidproject.Aviation.AviationTrackerActivity;
 import algonquin.cst2335.finalandroidproject.Bear.BearActivity;
 import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.Trivia.TriviaActivity;
+import algonquin.cst2335.finalandroidproject.databinding.ActivityCurrencyConverterBinding;
+import algonquin.cst2335.finalandroidproject.databinding.CurrencyDataDetailsBinding;
 import algonquin.cst2335.finalandroidproject.databinding.RecyclerviewCurrencyConverterBinding;
 
 public class CurrencyHistory extends AppCompatActivity {
 
     private CurrencyViewModel currencyViewModel;
-    private MyAdapter myAdapter;
-    private RecyclerviewCurrencyConverterBinding binding;
+        private RecyclerviewCurrencyConverterBinding binding;
+
+    private ArrayList<CurrencySelected> conversionList;
+
+   // protected RecyclerView.Adapter<CurrencyConverterActivity.MyRowHolder> myAdapter;
+
+    protected RecyclerView.Adapter<CurrencyHistory.MyRowHolder> myAdapter;
+
+
+    private CurrencyDAO myDAO;
+
+
+
+    protected RecyclerviewCurrencyConverterBinding recyclerviewCurrencyConverterBinding;
+
+    private ArrayList<CurrencySelected> conversionResult;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,42 +189,50 @@ public class CurrencyHistory extends AppCompatActivity {
 
         currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
 
-        // Set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter = new MyAdapter(this, new ArrayList<>());
-        recyclerView.setAdapter(myAdapter);
+        recyclerviewCurrencyConverterBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Observe changes in the currencyConvertedList LiveData
-       currencyViewModel.getAllAmount().observe(this, conversionList -> {
-           ArrayList<CurrencySelected> arrayList = new ArrayList<>(conversionList);
-           myAdapter.updateList(arrayList);
-           myAdapter.notifyDataSetChanged();
-        });
+        CurrencyDatabase db = Room.databaseBuilder(getApplicationContext(), CurrencyDatabase.class, "MyCurrencyDatabase").build();
+        myDAO = db.cDAO();
 
-        // Retrieve the selected item from ViewModel and perform deletion if needed
-        CurrencySelected selected = currencyViewModel.getSelectedAmount().getValue();
-        if (selected != null) {
-            int position = myAdapter.getPosition(selected);
-            if (position >= 0) {
-                myAdapter.removeAt(position);
+        /**
+            This adds all the information from the database and output the result in recycler view.
+         */
+        if(conversionList == null){
+            currencyViewModel.conversionResultsList.setValue(conversionList = new ArrayList<>());
+            Executor thread = Executors.newSingleThreadExecutor();
+            thread.execute(()->{
+                conversionList.addAll( myDAO.getAllAmount() );
+
+                runOnUiThread(() -> binding.recyclerView.setAdapter( myAdapter ));
+            });
+
+        }
+
+
+        recyclerviewCurrencyConverterBinding.recyclerView.setAdapter( myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
+            @NonNull
+            @Override
+            public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                CurrencyDataDetailsBinding binding = CurrencyDataDetailsBinding.inflate(getLayoutInflater(), parent, false);
+                return new MyRowHolder(binding.getRoot());
             }
-            currencyViewModel.getSelectedAmount().setValue(null); // Clear the selected item
-        }
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String conversionResult = extras.getString("conversion_result");
-            String time = extras.getString("time");
+            @Override
+            public void onBindViewHolder(@NonNull MyRowHolder holder, int position){
 
-            // Create a new CurrencySelected object
-            CurrencySelected convert = new CurrencySelected(conversionResult, time);
+                CurrencySelected currencySelected = conversionResult.get(position);
+                holder.amountInputText.setText(currencySelected.getConversionResult());
+                holder.timeText.setText(currencySelected.getTime());
+            }
 
-            // Add the new item to the RecyclerView through the adapter
-            myAdapter.addItem(convert);
-        }
+            @Override
+            public int getItemCount() {
+                return conversionResult.size();
+            }
+
+
+        });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -249,4 +283,30 @@ public class CurrencyHistory extends AppCompatActivity {
 
         return true;
     }
+
+
+
+
+    class MyRowHolder extends RecyclerView.ViewHolder {
+        TextView amountInputText;
+
+        TextView timeText;
+
+        public MyRowHolder(@NonNull View itemView) {
+            super(itemView);
+
+            itemView.setOnClickListener(clk -> {
+                int position = getAbsoluteAdapterPosition();
+                CurrencySelected selected = conversionResult.get(position);
+
+                currencyViewModel.selectedAmount.postValue(selected);
+
+            });
+
+            amountInputText = itemView.findViewById(R.id.amountInput);
+            timeText = itemView.findViewById(R.id.time);
+
+        }
+    }
+
 }
