@@ -58,7 +58,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
     private ActivityAviationTrackerBinding binding;
     private FlightRequestDAO DAO;
     private ArrayList<FlightRequest> requests;
-    private FlightRequest newReq;
     private SharedPreferences sharedPreferences;
     private RequestQueue queue = null;
     private AviationTrackerViewModel ATViewModel;
@@ -72,33 +71,44 @@ public class AviationTrackerActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.bear_button) {
+        if (item.getItemId() == R.id.bear1) {
             Intent nextPage = new Intent(this, BearActivity.class);
             startActivity(nextPage);
 
-        } else if (item.getItemId() == R.id.currency_button) {
+        } else if (item.getItemId() == R.id.currency_converter_1) {
             Intent nextPage2 = new Intent(this, CurrencyConverterActivity.class);
             startActivity(nextPage2);
 
-        } else if (item.getItemId() == R.id.trivia_button) {
+        } else if (item.getItemId() == R.id.trivia1) {
             Intent nextPage3 = new Intent(this, TriviaActivity.class);
             startActivity(nextPage3);
 
         } else if (item.getItemId() == R.id.about) {
+            String about = String.format(getResources().getString(R.string.AviationAbout));
+            String aboutMess = String.format(getResources().getString(R.string.AviationAboutMessage));
+            String message = String.format(getResources().getString(R.string.Okkii));
+
             AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
-            builder.setTitle("Who Created this! ")
-                    .setMessage("Version 1.0, created by Olivie Bergeron")
-                    .setPositiveButton("OKiii", (dialog, cl) -> {
+            builder.setTitle(about)
+                    .setMessage(aboutMess)
+                    .setPositiveButton(message, (dialog, cl) -> {
                     })
                     .create().show();
 
         } else if (item.getItemId() == R.id.howID) {
+            String howTo = String.format(getResources().getString(R.string.AviationHowTo));
+            String howToMess = String.format(getResources().getString(R.string.AviationHowToMessage));
+            String message = String.format(getResources().getString(R.string.Okkii));
             AlertDialog.Builder builder2 = new AlertDialog.Builder(AviationTrackerActivity.this);
-            builder2.setTitle(" How To?")
+            builder2.setTitle(howTo)
                     .setMessage("Just type an airport code to get your data")
-                    .setPositiveButton("OKiii", (dialog, cl) -> {
+                    .setPositiveButton(message, (dialog, cl) -> {
                     })
                     .create().show();
+        }else if(item.getItemId() == R.id.saved){
+            finish();
+            startActivity(getIntent());
+
         }
         return false;
     }
@@ -156,59 +166,87 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
 
         binding.button.setOnClickListener(click ->{
+            // Step 1: Get the text from the EditText and convert it to uppercase
             String typed = binding.editTextText.getText().toString().toUpperCase();
+            // Step 2: Prepare the URL for the API call
             String url = "https://api.aviationstack.com/v1/flights?access_key=9694046b348f410681e40e36750f3730&dep_iata="+typed;
+            // Step 3: Check if the typed code is valid using the checkCode() method
             if(checkCode(typed)){
+                // Step 4: Create a new Volley RequestQueue and Executor
                 queue = Volley.newRequestQueue(this);
                 Executor thread = Executors.newSingleThreadExecutor();
 
+                // Step 5: Clear the RecyclerView dataset by removing all not saved items
+                ArrayList<FlightRequest> savedItems = new ArrayList<>();
+                for (FlightRequest request : requests) {
+                    if (request.getSaveID().equals("Saved")) {
+                        savedItems.add(request);
+                    }
+                }
+                requests.clear();
+                requests.addAll(savedItems);
+                myAdapter.notifyDataSetChanged();
+
+                // Step 6: Create a JsonObjectRequest to fetch data from the API
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                         (response) -> {
                             try {
+                                // Step 7: Parse the JSON response and extract flight data
                                 JSONArray dataArray = response.getJSONArray("data");
 
                                 for (int i = 0; i < dataArray.length(); i++) {
                                     JSONObject position = dataArray.getJSONObject(i);
-                                    JSONObject depart = position.getJSONObject("departure");
                                     JSONObject arrival = position.getJSONObject("arrival");
-                                    String airportName= depart.getString("airport");
+                                    String delay= arrival.getString("delay");
                                     JSONObject flight = position.getJSONObject("flight");
                                     String flightString = flight.getString("number");
                                     String status = position.getString("flight_status");
-                                    String date = position.getString("flight_date");
-                                    String departureAP = depart.getString("airport");
+                                    String gate = arrival.getString("gate");
+                                    String terminal = arrival.getString("terminal");
                                     String arrivalAP = arrival.getString("airport");
                                     JSONObject airline = position.getJSONObject("airline");
                                     String airlineN = airline.getString("name");
 
+                                    String apCode=typed;
+                                    String flightNum= flightString;
+                                    String delayTime = delay;
+                                    String statusString= status;
+                                    String saveState= "Not Saved";
+                                    String gateNum= gate;
+                                    String terminalNum= terminal;
+                                    String arrivalAirport= arrivalAP;
+                                    String airlineName= airlineN;
+
+                                    // Step 8: Create a new FlightRequest object with the extracted data
+                                    FlightRequest newReq = new FlightRequest(apCode,flightNum, delayTime, statusString, saveState,gateNum,terminalNum,arrivalAirport,airlineName);
 
 
-
-                                    FlightRequest newReq = new FlightRequest("AP code: "+ typed,"Flight #: "+flightString,
-                                            "Airport Dep.: "+ airportName,"Status: "+status,"Not Saved","Date: "+date,"Departure airport: "+departureAP,
-                                            "Arrival Airport: "+arrivalAP,"Airline Name: "+airlineN);
-
-
-
-                                    requests.add(newReq);
-                                    myAdapter.notifyItemInserted(requests.size() - 1);
+                                    // Step 9: Check if the newReq is a duplicate using the isDuplicateFlight() method
+                                    if (!isDuplicateFlight(newReq)) {
+                                        // Step 10: Only add the new item if it's not a duplicate
+                                        requests.add(newReq);
+                                        myAdapter.notifyItemInserted(requests.size() - 1);
+                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         },
                         error -> {
-                            // Handle the error case if needed
+                            // Step 11: Handle API call error, show a toast message
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast.makeText(this, "Api crashed again lol", duration).show();
                             error.printStackTrace();
-                        });
 
+                        });
+                    // Step 12: Add the JsonObjectRequest to the Volley RequestQueue
                     queue.add(request);
 
+                    // Step 13: Save the typed code to SharedPreferences
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(REQ_CODE, typed);
                     editor.apply();
 
-                binding.editTextText.setText("");
             }
         });
 
@@ -228,9 +266,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
             @Override
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                 holder.code.setText("");
-                holder.nameID.setText("");
                 holder.flightId.setText("");
-                holder.statusID.setText("");
                 holder.saveID.setText("Not Saved");
 
 
@@ -238,8 +274,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 FlightRequest obj = requests.get(position);
                 holder.code.setText(obj.getCode());
                 holder.flightId.setText(obj.getFlightID());
-                holder.nameID.setText(obj.getNameID());
-                holder.statusID.setText(obj.getStatusID());
                 holder.saveID.setText(obj.getSaveID());
 
 
@@ -278,9 +312,18 @@ public class AviationTrackerActivity extends AppCompatActivity {
             return false;
         }
     }
+    private boolean isDuplicateFlight(FlightRequest newReq) {
+        for (FlightRequest request : requests) {
+            if (request.getCode().equals(newReq.getCode()) && request.getFlightID().equals(newReq.getFlightID())) {
+                return true; // Found a duplicate
+            }
+        }
+        return false; // No duplicates found
+    }
+
 
     class MyRowHolder extends RecyclerView.ViewHolder {
-        TextView code, nameID, flightId, statusID, saveID, airlineName, ArrivalAirport,departureAirport, detDate, detFlightID, detStatus;
+        TextView code, flightId, saveID, airlineName, ArrivalAirport,departureAirport, detDate, detFlightID, detStatus;
 
 
 
@@ -303,16 +346,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
                 FlightRequest m = requests.get(position);
                 ATViewModel.selectedRequest.postValue(m);
 
-
-//                FragmentManager fMgr = getSupportFragmentManager();
-//                FragmentTransaction tx = fMgr.beginTransaction();
-//                FlightRequestDetails frd = FlightRequestDetails.newInstance(m);
-//                tx.replace(R.id.fragLocation, frd);
-//                tx.addToBackStack(null);
-//                tx.commit();
-
-
-
             });
 
 
@@ -326,7 +359,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
                             .setMessage("Do you save the dataset: " + flightId.getText())
                             .setNegativeButton("Save", (dialog, cl) -> {
                                 if (!m.getSaveID().equals("Saved")) {
-                                    m.setSaveID("Saved");
+                                    m.setSaveID(String.format(getResources().getString(R.string.save)));
                                     FlightRequest deletedItem = requests.get(position);
                                     myAdapter.notifyItemChanged(position); // Refresh the item view at the given position
                                     Executor thread = Executors.newSingleThreadExecutor();
@@ -334,7 +367,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
                                     Snackbar.make(flightId, "You saved dataset #" + (position + 1), Snackbar.LENGTH_LONG)
                                             .setAction("Undo", click -> {
                                                 // Undo the "Save" action
-                                                m.setSaveID("Not Saved");
+                                                m.setSaveID(String.format(getResources().getString(R.string.saveState)));
                                                 requests.add(position, deletedItem);
                                                 myAdapter.notifyItemInserted(position);
                                             })
@@ -351,6 +384,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
                     builder.setTitle("Question:")
                             .setMessage("Do you delete this dataset: " + flightId.getText())
+                            .setNegativeButton("Keep",((dialog, which) -> {}))
                             .setPositiveButton("Delete", (dialog, cl) -> {
                             Executor thread = Executors.newSingleThreadExecutor();
                             thread.execute(() -> DAO.deleteCode(m));
@@ -382,18 +416,16 @@ public class AviationTrackerActivity extends AppCompatActivity {
             });
 
             code= itemView.findViewById(R.id.airCodeID);
-            nameID= itemView.findViewById(R.id.nameID);
             flightId= itemView.findViewById(R.id.flighNum);
-            statusID= itemView.findViewById(R.id.statusID);
             saveID=itemView.findViewById(R.id.saveID);
 
 
-            airlineName= itemView.findViewById(R.id.airlineName);
-            ArrivalAirport= itemView.findViewById(R.id.ArrivalAirport);
-            departureAirport= itemView.findViewById(R.id.departureAirport);
-            detDate= itemView.findViewById(R.id.detDate);
-            detFlightID = itemView.findViewById(R.id.detFlightID);
-            detStatus= itemView.findViewById(R.id.detStatus);
+//            airlineName= itemView.findViewById(R.id.gateNumID);
+//            ArrivalAirport= itemView.findViewById(R.id.arrivalID);
+//            departureAirport= itemView.findViewById(R.id.delayNumID);
+//            detDate= itemView.findViewById(R.id.terminalNumID);
+//            detFlightID = itemView.findViewById(R.id.flightNumID);
+//            detStatus= itemView.findViewById(R.id.flightStatusID);
 
 
         }

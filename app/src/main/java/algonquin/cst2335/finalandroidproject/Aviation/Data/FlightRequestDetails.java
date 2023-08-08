@@ -30,20 +30,20 @@ public class FlightRequestDetails extends DialogFragment {
 
         // Set the binding's root view to be non-focusable and non-clickable
         binding.getRoot().setEnabled(false);
-        binding.detFlightID.setText("");
-        binding.airlineName.setText("");
-        binding.detStatus.setText("");
-        binding.detDate.setText("");
-        binding.departureAirport.setText("");
-        binding.ArrivalAirport.setText("");
+        binding.flightNumID.setText("");
+        binding.delayNumID.setText("");
+        binding.flightStatusID.setText("");
+        binding.gateNumID.setText("");
+        binding.terminalNumID.setText("");
+        binding.arrivalID.setText("");
 
         if (selected != null) {
-            binding.detFlightID.setText(selected.getFlightID());
-            binding.airlineName.setText(selected.getNameID());
-            binding.detStatus.setText(selected.getStatusID());
-            binding.detDate.setText(selected.date);
-            binding.departureAirport.setText(selected.departureAP);
-            binding.ArrivalAirport.setText(selected.arrivalAP);
+            binding.flightNumID.setText(selected.getFlightID());
+            binding.delayNumID.setText(selected.getNameID());
+            binding.flightStatusID.setText(selected.getStatusID());
+            binding.gateNumID.setText(selected.date);
+            binding.terminalNumID.setText(selected.departureAP);
+            binding.arrivalID.setText(selected.arrivalAP);
         }
 
         dialog.setContentView(binding.getRoot());
