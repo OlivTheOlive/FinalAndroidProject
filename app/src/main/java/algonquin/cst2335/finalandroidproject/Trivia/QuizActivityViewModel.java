@@ -1,21 +1,16 @@
 package algonquin.cst2335.finalandroidproject.Trivia;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class QuizActivityViewModel extends ViewModel {
 
-    private MutableLiveData<QuestionObj> selectedQuestion = new MutableLiveData<>();
 
+    private MutableLiveData<ArrayList<Score>> score = new MutableLiveData<>();
 
-    public MutableLiveData<QuestionObj> getSelectedQuestion() {
-        return selectedQuestion;
-    }
-    public void setSelectedQuestion(QuestionObj question) {
-        selectedQuestion.setValue(question);
-    }
+    public MutableLiveData<List<Score>> selectedScore = new MutableLiveData<java.util.List<Score>>(null);
 }

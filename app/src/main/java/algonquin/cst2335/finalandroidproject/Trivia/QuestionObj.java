@@ -1,16 +1,29 @@
 package algonquin.cst2335.finalandroidproject.Trivia;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
-public class QuestionObj implements Serializable {
+
+public class QuestionObj implements Serializable  {
+
+    public int id;
+
+
     private String questionString;
+
     private String correctAnswer;
+
     private List<String> incorrectAnswers;
 
+
+public QuestionObj() {
+
+}
     public QuestionObj(String questionString, String correctAnswer, List<String> incorrectAnswers) {
         this.questionString = questionString;
         this.correctAnswer = correctAnswer;
@@ -40,4 +53,6 @@ public class QuestionObj implements Serializable {
     public void setIncorrectAnswers(List<String> incorrectAnswers) {
         this.incorrectAnswers = incorrectAnswers;
     }
+
+
 }
