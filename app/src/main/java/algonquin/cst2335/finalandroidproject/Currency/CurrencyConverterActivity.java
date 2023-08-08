@@ -122,7 +122,7 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
             RecyclerviewCurrencyConverterBinding recyclerViewBinding = RecyclerviewCurrencyConverterBinding.inflate(getLayoutInflater());
             RecyclerView recyclerView = recyclerViewBinding.recyclerView;
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
             recyclerView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
                 @NonNull
                 @Override
@@ -211,6 +211,8 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                 queue.add(request);
 
             });
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         }
 

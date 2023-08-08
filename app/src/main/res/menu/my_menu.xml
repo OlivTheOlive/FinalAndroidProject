@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/currency_img"
-        android:icon="@drawable/currency_converter_image"
+        android:icon="@drawable/currency_converator_image"
         android:title="Item"
         app:showAsAction="always" />
     <item
         android:id="@+id/aviation_tracker"
-        android:icon="@drawable/aviation_tracker_image"
+        android:icon="@drawable/aviation_tracker_img"
         android:title="Item"
         app:showAsAction="always" />
     <item
         android:id="@+id/bear_img"
-        android:icon="@drawable/bear_image_generator"
+        android:icon="@drawable/bear"
         android:title="Item"
         app:showAsAction="always" />
     <item
