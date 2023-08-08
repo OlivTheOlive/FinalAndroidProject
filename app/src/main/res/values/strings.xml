@@ -19,4 +19,21 @@
     <string name="width">Width</string>
     <string name="get_flight_btn">Get Data</string>
     <string name="edit_aviation">3 letter code pls</string>
+    <string name="save">Saved</string>
+    <string name="flightDet">Flight Dets: </string>
+    <string name="AirportCode">Airport Code: </string>
+    <string name="flightNum">Flight #: </string>
+    <string name="delayTime">Delay: </string>
+    <string name="statusString">Status: </string>
+    <string name="gateNum">Gate #: </string>
+    <string name="terminalNum">Terminal #: </string>
+    <string name="arrivalAirport">Arrival Airport: </string>
+    <string name="airlineName">Airline Name: </string>
+    <string name="saveState">Not Saved</string>
+    <string name="AviationAbout">About</string>
+    <string name="AviationHowTo">HowTO!</string>
+    <string name="AviationAboutMessage">Version 1.0, created by Olivie Bergeron</string>
+    <string name="AviationHowToMessage">Just type an airport code to get your data</string>
+    <string name="Okkii">Okkii</string>
+
 </resources>
