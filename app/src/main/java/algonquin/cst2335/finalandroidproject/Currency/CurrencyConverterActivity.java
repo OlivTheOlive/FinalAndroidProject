@@ -6,13 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,9 +26,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,8 +34,6 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import algonquin.cst2335.finalandroidproject.Aviation.AviationTrackerActivity;
@@ -49,30 +44,16 @@ import algonquin.cst2335.finalandroidproject.databinding.ActivityCurrencyConvert
 import algonquin.cst2335.finalandroidproject.databinding.CurrencyDataDetailsBinding;
 import algonquin.cst2335.finalandroidproject.databinding.RecyclerviewCurrencyConverterBinding;
 
-import android.os.AsyncTask;
 
-
-public class CurrencyConverterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class CurrencyConverterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     protected RequestQueue queue = null;
-    //this is used for binding the elements in ActivityCurrencyConverter
     private ActivityCurrencyConverterBinding binding;
 
-    private RecyclerviewCurrencyConverterBinding recyclerviewCurrencyConverterBinding;
-
-
-    //This is used for creating an array list of object enterAmount
     private ArrayList<CurrencySelected> conversionResult = new ArrayList<>();
 
-
-
-    //This is calling the CurrencyViewModel
     private CurrencyViewModel currencyViewModel;
 
-    //This is calling the RecyclerView
-   // private RecyclerView recyclerView;
-
-    //These is the variables in Currency Converter Activity
     private TextView textView;
 
     CurrencyHistory currencyHistory = new CurrencyHistory();
@@ -83,16 +64,12 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
     protected String countryTo;
     protected String amountInput;
 
-    //calling DAO
-    CurrencyDAO myDAO;
-
-    //Import CurrencySelected
-    CurrencySelected currencySelected;
+    protected CurrencyDAO myDAO;
 
     protected RecyclerView.Adapter<MyRowHolder> myAdapter;
 
-    RecyclerviewCurrencyConverterBinding recyclerViewBinding = RecyclerviewCurrencyConverterBinding.inflate(getLayoutInflater());
-    RecyclerView recyclerView = recyclerViewBinding.recyclerView;
+    protected RecyclerviewCurrencyConverterBinding recyclerViewBinding;
+
 
     @Override
     @SuppressLint("NotifyDataSetChange")
@@ -107,7 +84,8 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
         setSupportActionBar(binding.currencyToolbar);
 
-       // CurrencyViewModel currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
+        CurrencyDatabase db = Room.databaseBuilder(getApplicationContext(), CurrencyDatabase.class, "MyCurrencyDatabase").build();
+        myDAO = db.cDAO();
 
 
         if (binding.amountInput == null) {
@@ -139,10 +117,13 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
             from.setOnItemSelectedListener(this);
             to.setOnItemSelectedListener(this);
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
             myDAO = currencyDatabase.cDAO();
 
-            recyclerView.setAdapter( myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
+            RecyclerviewCurrencyConverterBinding recyclerViewBinding = RecyclerviewCurrencyConverterBinding.inflate(getLayoutInflater());
+            RecyclerView recyclerView = recyclerViewBinding.recyclerView;
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
                 @NonNull
                 @Override
                 public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -151,8 +132,12 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                 }
 
                 @Override
-                public void onBindViewHolder(@NonNull MyRowHolder holder, int position){
+                public int getItemViewType(int position){
+                    return 0;
+                }
 
+                @Override
+                public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                     CurrencySelected currencySelected = conversionResult.get(position);
                     holder.amountInputText.setText(currencySelected.getConversionResult());
                     holder.timeText.setText(currencySelected.getTime());
@@ -163,11 +148,7 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                     return conversionResult.size();
                 }
 
-
             });
-
-            recyclerviewCurrencyConverterBinding.recyclerView.addView(recyclerView);
-
 
             binding.convert.setOnClickListener(clk -> {
 
@@ -187,7 +168,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                         (response -> {
                             try {
 
-
                                 String baseCurrencyCode = response.getString("base_currency_code");
                                 double amount = response.getDouble("amount");
 
@@ -199,9 +179,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                                 double convertedAmount = userCurrencyObject.getDouble("rate_for_amount");
 
                                 runOnUiThread(() -> {
-
-
-
                                     String resultText = baseCurrencyCode + "=" + amount + " " + countryTo + "=" + convertedAmount;
                                     binding.conversionResult.setText(resultText);
 
@@ -216,22 +193,12 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                                 binding.amountInput.setText("");
                                 recyclerView.scrollToPosition(conversionResult.size() - 1);
 
-
-
                                 Executors.newSingleThreadExecutor().execute(new Runnable() {
                                     @Override
-                                    public void run()
-                                        {convert.id = (int) myDAO.insertAmount(convert); }
+                                    public void run() {
+                                        convert.id = (int) myDAO.insertAmount(convert);
 
-                                       /* currencyDatabase.cDAO().insertAmount(convert);
-                                        convert.getConversionResult();
-                                        currencyViewModel.addConversionResult(convert);*/
-
-                                       /* Intent nextPage = new Intent(CurrencyConverterActivity.this, CurrencyHistory.class);
-                                        nextPage.putExtra("conversion_result", convert.getConversionResult());
-                                        nextPage.putExtra("time", convert.getTime());
-                                        startActivity(nextPage);*/
-
+                                    }
                                 });
 
                             } catch (JSONException e) {
@@ -268,13 +235,10 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        setSupportActionBar(binding.currencyToolbar);
-        CurrencyViewModel currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
+        currencyViewModel = new ViewModelProvider(this).get(CurrencyViewModel.class);
         CurrencySelected selected = currencyViewModel.getSelectedAmount().getValue();
-//
 
         if (item.getItemId() == R.id.deleteCurrency) {
             AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
@@ -346,31 +310,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
-   /* class MyRowHolder extends RecyclerView.ViewHolder{
-        TextView amountInputText;
-
-        TextView timeText;
-
-        public MyRowHolder(@NonNull View itemView) {
-            super(itemView);
-
-            itemView.setOnClickListener(clk -> {
-                int position = getAbsoluteAdapterPosition();
-                CurrencySelected selected = conversionResult.get(position);
-
-                currencyViewModel.selectedAmount.postValue(selected);
-
-            });
-
-            amountInputText = itemView.findViewById(R.id.amountInput);
-            timeText = itemView.findViewById(R.id.time);
-
-        }
-
-
-*/
 
     class MyRowHolder extends RecyclerView.ViewHolder {
         TextView amountInputText;
