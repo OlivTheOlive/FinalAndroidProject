@@ -48,26 +48,61 @@ import algonquin.cst2335.finalandroidproject.databinding.CurrencyDataDetailsBind
 import algonquin.cst2335.finalandroidproject.databinding.RecyclerviewCurrencyConverterBinding;
 
 
+/**
+ * This activity allows users to convert currency between different countries using real-time
+ * exchange. It also provides a history of currency conversion results.
+ */
 public class CurrencyConverterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    /**
+     * the Volley request queue for making API requests.
+     */
     protected RequestQueue queue = null;
+    /**
+     * The data binding instance for the activity layout.
+     */
     private ActivityCurrencyConverterBinding binding;
-
+    /**
+     * List of currency conversion results.
+     */
     ArrayList<CurrencySelected> conversionResultsList;
-
+    /**
+     * ViewModel for managing currency conversion data.
+     */
     private CurrencyViewModel currencyViewModel;
-
+    /**
+     * RecyclerView for displaying currency conversion history.
+     */
     protected RecyclerView recyclerView;
+    /**
+     * The selected source country for currency conversion
+     */
     protected String countryFrom;
+    /**
+     * The select target country for currency conversion.
+     */
     protected String countryTo;
+    /**
+     * The user-input amount for currency conversion.
+     */
     protected String amountInput;
-
+    /**
+     * The DAO for interacting with the currency database.
+     */
     protected CurrencyDAO myDAO;
-
+    /**
+     * The RecyclerView adapter for displaying currency conversion history items.
+     */
     protected RecyclerView.Adapter<MyRowHolder> myAdapter;
 
 
-
+    /**
+     * @author Hanna Felix
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     @SuppressLint("NotifyDataSetChange")
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +113,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
         CurrencyDatabase db = Room.databaseBuilder(getApplicationContext(), CurrencyDatabase.class, "MyCurrencyDatabase").build();
         myDAO = db.cDAO();
-
-
 
         conversionResultsList = currencyViewModel.conversionResultsList.getValue();
 
@@ -105,7 +138,17 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         setContentView(binding.getRoot());
 
 
+        /**
+         * Adapter for binding currency conversion history data to the RecyclerView.
+         */
         binding.recyclerView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
+                /**
+                 * Called when a new ViewHolder is needed to represent a currency conversion history item.
+                 *
+                 * @param parent   The parent ViewGroup into which the new View will be added.
+                 * @param viewType The type of the new View.
+                 * @return A new MyRowHolder instance to represent a currency conversion history item.
+                 */
                 @NonNull
                 @Override
                 public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -113,6 +156,12 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                     return new MyRowHolder(binding.getRoot());
                 }
 
+                /**
+                 * Binds data to the given ViewHolder to represent a currency conversion history item.
+                 *
+                 * @param holder   The ViewHolder to bind data to.
+                 * @param position The position of the item within the data source.
+                 */
                 @Override
                 public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                     holder.amountInputText.setText("");
@@ -123,11 +172,22 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                     holder.timeText.setText(currencySelected.getTime());
                 }
 
-                @Override
+            /**
+             * Returns the total number of currency conversion history items in the data source.
+             *
+             * @return The total number of items in the currency conversion history.
+             */
+            @Override
                 public int getItemCount() {
                     return conversionResultsList.size();
                 }
 
+                /**
+                 * Returns the view type of the item at the specified position for the purpose of view recycling.
+                 *
+                 * @param position The position of the item within the data source.
+                 * @return The view type of the item at the specified position.
+                 */
                 @Override
                 public int getItemViewType(int position){
                     return 0;
@@ -135,8 +195,14 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
             });
 
+        /**
+         * Set the app's toolbar as the action bar for the activity.
+         */
         setSupportActionBar(binding.currencyToolbar);
 
+        /**
+         * Check if the input amount is null. If so, display an AlertDialog informing the user to input a number.
+         */
         if (binding.amountInput == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Please input a number")
@@ -150,7 +216,9 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
             alert.show();
 
         } else if (binding.amountInput != null) {
-
+            /**
+             * Configure the 'from' and 'to' spinners for selecting source and target countries for currency conversion.
+             */
             Spinner from = binding.currencyFrom;
             Spinner to = binding.currencyTo;
             ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
@@ -166,6 +234,9 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
             from.setOnItemSelectedListener(this);
             to.setOnItemSelectedListener(this);
 
+                /**
+                 * Handle the currency conversion when the 'Convert' button is clicked.
+                 */
                 binding.convert.setOnClickListener(clk -> {
 
                 countryFrom = binding.currencyFrom.getSelectedItem().toString();
@@ -232,8 +303,15 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
             });
 
+            /**
+             * Set the layout manager for the RecyclerView to display currency conversion history items.
+             */
             binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+            /**
+             * Observe changes in the 'selectedAmount' LiveData and replace the current fragment with
+             * a new instance of CurrencyDetailsFragment to display details of the selected currency conversion.
+             */
             currencyViewModel.selectedAmount.observe(this,(newCurrencyValue)-> {
                 CurrencyDetailsFragment currencyFragment = new CurrencyDetailsFragment( newCurrencyValue );
                 getSupportFragmentManager()
@@ -247,13 +325,26 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
     }
 
+    /**
+     * ViewHolder class to hold and manage the views for each currency conversion history item.
+     */
     class MyRowHolder extends RecyclerView.ViewHolder {
 
         CurrencyDataDetailsBinding currencyDataDetailsBinding;
-
+        /**
+         * TextView to display the converted currency amount.
+         */
         TextView amountInputText;
+        /**
+         * TextView to display the timestamp of the currency conversion.
+         */
         TextView timeText;
 
+        /**
+         * Constructs a new MyRowHolder instance and binds the UI elements.
+         *
+         * @param itemView The View representing the currency conversion history item.
+         */
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
             currencyDataDetailsBinding = CurrencyDataDetailsBinding.bind(itemView);
@@ -272,17 +363,35 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
     }
 
 
-
+    /**
+     * Callback method to be invoked when an item in the 'from' or 'to' spinner is selected.
+     *
+     * @param parent   The AdapterView where the selection happened.
+     * @param view     The view within the AdapterView that was clicked.
+     * @param position The position of the view in the adapter.
+     * @param id       The row id of the item that is selected (not used in this implementation).
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
     }
 
+    /**
+     * Callback method to be invoked when no item is selected in the 'from' or 'to' spinner.
+     *
+     * @param parent The AdapterView that now contains no selected item.
+     */
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
+    /**
+     * Initialize the options menu for the activity.
+     *
+     * @param menu The options menu in which you place your items.
+     * @return True for the menu to be displayed, false otherwise.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -292,7 +401,12 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
         return true;
     }
 
-
+    /**
+     * Called when an item in the options menu is selected.
+     *
+     * @param item The selected menu item.
+     * @return True to consume the event here, false to allow normal menu processing to proceed.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -370,32 +484,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
         return true;
 
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
 
