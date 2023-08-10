@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Projet final</string>
+
     <string name="button_message">Suivi de vol de pile d\'aviation</string>
     <string name="button2_message">Base de données de questions triviales</string>
     <string name="button3_message">Base de données de questions de trivia</string>
     <string name="button4_message">Générer une image d\'ours</string>
+
     <string name="welcomeMessage">"Bienvenue au jeu-questionnaire! Sélectionnez un type de question pour les anecdotes et choisissez un nombre parmi 1 à 50 questions. Appuyez sur les différentes icônes en haut à droite pour accéder aux applications affichées."</string>
     <string name="bear_title">Generate Bear Image</string>
     <string name="geographyQuestions">Nombre de questions sur la géographie générées :</string>
     <string name="animalQuestions">Nombre de questions sur les animaux générées : </string>
+    <string name="bear_title">Générer une image d\'ours</string>
+
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
+
+
 
     <string name="score_text_view">Pointage</string>
     <string name="leaderBoard">Voir le tableau des leaders</string>
@@ -30,10 +37,19 @@
     <string name="question1">La Question Va Ici</string>
     <string name="answer">La réponse va ici</string>
 
+
+
+
+    <string name="txt_edit1">Entrer le montant</string>
+    <string name="dCurrency">effacer</string>
+    <string name="about">Comment utiliser</string>
+
+
+
     <string name="get_flight_btn">Obtenir données</string>
     <string name="edit_aviation">code 3 lettres svp</string>
     <string name="save">Enregistrer</string>
-    <string name="flightDet">Les détails du vol:</string>
+    <string name="flightDet">Les détails:</string>
     <string name="AirportCode">"Code de l'aéroport : "</string>
     <string name="flightNum">"Vol #: "</string>
     <string name="delayTime">"Retard: "</string>
@@ -44,4 +60,33 @@
     <string name="airlineName">Nom de la compagnie :</string>
     <string name="saveState">Non enregistré</string>
 
+
+
+    <string name="show_save">Afficher les images enregistrées</string>
+    <string name="hide_save">Masquer les images enregistrées</string>
+    <string name="ask_delete">Voulez-vous supprimer ce message?</string>
+    <string name="place_height">LA HAUTEUR VA ICI</string>
+    <string name="place_width">LA LARGEUR VA ICI</string>
+    <string name="place_file">LE NOM DU FICHIER VA ICI</string>
+    <string name="frag_height">Hauteur: </string>
+    <string name="frag_width">Largeur: </string>
+    <string name="frag_file">Nom de fichier: </string>
+    <string name="AviationAbout">Qui!</string>
+    <string name="AviationHowTo">Comment!</string>
+    <string name="AviationAboutMessage">Version 1.0, créée par Olivie Bergeron</string>
+    <string name="AviationHowToMessage">Tapez simplement un code d\'aéroport pour obtenir vos données</string>
+    <string name="Okkii">Okkééé</string>
+    <string name="showSave_Aviation">Enregister</string>
+    <string name="codeCheck">Vérification du code Checked</string>
+    <string name="codeCheckNegative">Le code n\'est pas valide, 3 lettres s\'il vous plaît</string>
+    <string name="dataSetQestionSave">Voulez-vous enregistrer l\'ensemble de données :</string>
+    <string name="doYouSave">Sauvegarder</string>
+    <string name="youSaved">Vous avez enregistré l\'ensemble de données #</string>
+    <string name="doYouDelete">Supprimez-vous cet ensemble de données :</string>
+    <string name="youDelete">Vous avez effacer #</string>
+    <string name="undoAviation">annuler</string>
+    <string name="keepAviation">Garder</string>
+    <string name="dataSetNum">"Dase de données# "</string>
+    <string name="alreadySaveAv">" Deja Sauvé"</string>
+    <string name="apiCrash">Api s\'est encore écrasé lol</string>
 </resources>

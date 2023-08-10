@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_1"
+        android:title="Help"
+        />
+    <item
+        android:id="@+id/currency_menu"
+        android:title="Currency"
+        android:icon="@drawable/currency"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/aviation_menu"
+        android:title="Flight Tracker"
+        android:icon="@drawable/plane"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/trivia_menu"
+        android:title="Trivia"
+        android:icon="@drawable/trivia"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/delete"
+        android:title="Delete"
+        app:showAsAction="never"/>
+</menu>

@@ -7,16 +7,16 @@
         android:id="@+id/about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="about" />
+        android:title="@string/AviationAbout" />
 
     <item
         android:id="@+id/howID"
-        android:title="HowTO" />
+        android:title="@string/AviationHowTo" />
     <item
         android:id="@+id/saved"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Show Saved" />
+        android:title="@string/showSave_Aviation" />
     <item
         android:id="@+id/bear1"
         android:icon="@drawable/bear_generator_icon"
