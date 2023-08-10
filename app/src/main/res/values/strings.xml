@@ -3,6 +3,9 @@
     <string name="button_message">Aviation Stack Flight Tracker</string>
     <string name="button2_message">Currency Converter</string>
     <string name="button3_message">Trivia Question Database</string>
+    <string name="welcomeMessage">Welcome to the trivia game! Select a type of question for the trivia and pick a number from 1-50 questions. Tap on the different icons on the top right to navigate to the apps shown.</string>
+    <string name="geographyQuestions">Number of geography questions generated: </string>
+    <string name="animalQuestions">Number of animal questions generated: </string>
     <string name="button4_message">Bear Image Generator</string>
     <string name="score_text_view">Score</string>
     <string name="leaderBoard">See Leader Board</string>
@@ -18,6 +21,7 @@
     <string name="animalButton">Generate Animal Question</string>
     <string name="quizDoneButton">Submit Answers!</string>
     <string name="convert_button">Convert</string>
+    <string name="leaderboard_title">Top 10 Scores!</string>
     <string name="question1">Question Goes Here</string>
     <string name="frag_player_name">Player Name Goes Here</string>
     <string name="frag_score">Player Score Goes Here</string>
