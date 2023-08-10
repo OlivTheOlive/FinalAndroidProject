@@ -19,31 +19,34 @@
 
 
 
-    <string name="score_text_view">Pointage</string>
     <string name="leaderBoard">Voir le tableau des leaders</string>
+
+    <string name="delete_button">supprimer</string>
+    <string name="question">Sélectionner le nombre de questions</string>
+
+
+
+
+
+
+
+    <string name="score_text_view">Pointage</string>
     <string name="qstion">Question</string>
     <string name="player_name">Nom du joueur</string>
     <string name="score">Pointage</string>
     <string name="category">Catégorie</string>
     <string name="id">Id</string>
+
     <string name="delete_button">supprimer</string>
     <string name="leaderboard_title">Meilleurs 10 scores!</string>
+
     <string name="strtquiz">Démarrer le quiz?</string>
     <string name="usrname">Nom d’utilisateur</string>
-    <string name="question">Sélectionner le nombre de questions</string>
     <string name="geographyButton">Générer une question géographique</string>
     <string name="animalButton">Générer une question animale</string>
     <string name="quizDoneButton">Soumettez des réponses!</string>
     <string name="question1">La Question Va Ici</string>
     <string name="answer">La réponse va ici</string>
-
-
-
-
-    <string name="txt_edit1">Entrer le montant</string>
-    <string name="dCurrency">effacer</string>
-    <string name="about">Comment utiliser</string>
-
 
 
     <string name="get_flight_btn">Obtenir données</string>
@@ -60,6 +63,18 @@
     <string name="airlineName">Nom de la compagnie :</string>
     <string name="saveState">Non enregistré</string>
 
+
+
+    <string name="do_save">Voulez-vous enregistrer cette image ?</string>
+    <string name="question_title">Question:</string>
+    <string name="no">Non</string>
+    <string name="yes">Oui</string>
+    <string name="img_save">Image enregistrée</string>
+    <string name="bear_help">Entrez la hauteur souhaitée et générez ensuite une image d\'ours. \n\nCliquez sur l\'image pour l\'enregistrer sur votre appareil. \n\nCliquez sur une image en bas pour voir plus d\'informations.</string>
+    <string name="help">AIDER</string>
+    <string name="done">Fait</string>
+    <string name="bear_size">Taille de l\'image de l\'ours: </string>
+    <string name="undo">Annuler</string>
 
 
     <string name="show_save">Afficher les images enregistrées</string>

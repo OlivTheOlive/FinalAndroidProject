@@ -85,6 +85,7 @@ public class TriviaActivity extends AppCompatActivity {
 
     /** Static reference to the quiz ViewModel. */
     static QuizActivityViewModel quizModel;
+
     /** Adapter to display scores. */
 
     private ScoreAdapter scoreAdapter;

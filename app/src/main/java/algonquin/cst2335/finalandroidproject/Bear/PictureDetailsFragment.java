@@ -45,7 +45,7 @@ public class PictureDetailsFragment extends Fragment {
 
 
         PictureDetailsFragmentBinding binding = PictureDetailsFragmentBinding.inflate(inflater);
-        String files= new File(getActivity().getFilesDir(), selected.getWidth() + "-" + selected.getHeight() + ".png").getPath();
+        String files= new File(getActivity().getFilesDir(), selected.getWidth() + "-" + selected.getHeight() + "_" + selected.getTimeDownloaded()  + ".png").getPath();
         Bitmap newImage = BitmapFactory.decodeFile(files);
 
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), newImage);
@@ -61,14 +61,14 @@ public class PictureDetailsFragment extends Fragment {
             binding.fragmentPic.setMaxWidth(selected.getHeight());
             binding.heightFragment.setText(String.format(getResources().getString(R.string.frag_height)) + " " + selected.getHeight());
             binding.widthFragment.setText(String.format(getResources().getString(R.string.frag_width)) + " " + selected.getWidth());
-            fileName.setText(String.format(getResources().getString(R.string.frag_file)) + " " + selected.getWidth() +"-" + selected.getHeight() + ".png");
+            fileName.setText(String.format(getResources().getString(R.string.frag_file)) + " " + selected.getWidth() +"-" + selected.getHeight() + "_" + selected.getTimeDownloaded() + ".png");
             binding.fragmentPic.setImageDrawable(roundedBitmapDrawable);
         });
 
         binding.trash.setOnClickListener(clk -> {
             AlertDialog.Builder builder = new AlertDialog.Builder( getActivity() );
             builder.setMessage(String.format(getResources().getString(R.string.ask_delete)))
-                    .setTitle(String.format(getResources().getString(R.string.question)))
+                    .setTitle(String.format(getResources().getString(R.string.question_title)))
                     .setNegativeButton(String.format(getResources().getString(R.string.no)), (dialog,cl) ->{})
                     .setPositiveButton(String.format(getResources().getString(R.string.yes)), (dialog,cl) ->{
                         BearPicture m = pictures.get(position);

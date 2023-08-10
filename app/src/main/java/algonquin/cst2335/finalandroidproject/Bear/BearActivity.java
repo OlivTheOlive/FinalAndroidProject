@@ -2,6 +2,8 @@ package algonquin.cst2335.finalandroidproject.Bear;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,7 +27,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +44,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -72,10 +78,17 @@ public class BearActivity extends AppCompatActivity {
     static int position;
     Context context = this;
 
+    FrameLayout frame;
+
     public static ArrayList<BearPicture> pictures;
 
 
     RecyclerView.Adapter myAdapter;
+
+    private String getCurrentTimeStamp(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyy_hh:mm:ss");
+        return sdf.format(new Date());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,6 +100,8 @@ public class BearActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         binding = ActivityBearBinding.inflate(getLayoutInflater());
         queue = Volley.newRequestQueue(this);
         PictureDatabase db = Room.databaseBuilder(getApplicationContext(), PictureDatabase.class,"database-name").build();
@@ -103,6 +118,8 @@ public class BearActivity extends AppCompatActivity {
         hET.setText(savedHeight);
         wET.setText(savedWidth);
 
+
+
         if(pictures == null){
             pictureModel.pictures.postValue(pictures = new ArrayList<>());
 
@@ -115,9 +132,9 @@ public class BearActivity extends AppCompatActivity {
             });
 
         }
-        pictureModel.selectedPicture.observe(this, newMessageValue -> {
-            if(newMessageValue != null){
-                PictureDetailsFragment fragment = new PictureDetailsFragment( newMessageValue );
+        pictureModel.selectedPicture.observe(this, newPictureValue -> {
+            if(newPictureValue != null){
+                PictureDetailsFragment fragment = new PictureDetailsFragment( newPictureValue );
                 FragmentManager fMgr = getSupportFragmentManager();
                 FragmentTransaction tx = fMgr.beginTransaction();
 
@@ -168,11 +185,13 @@ public class BearActivity extends AppCompatActivity {
         binding.theBear.setOnClickListener(clk -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(BearActivity.this);
             builder.setMessage(String.format(getResources().getString(R.string.do_save)))
-                    .setTitle(String.format(getResources().getString(R.string.questionBear)))
+
+                    .setTitle(String.format(getResources().getString(R.string.question_title)))
+
                     .setNegativeButton(getResources().getString(R.string.no), (dialog, cl) -> {
                     })
                     .setPositiveButton(getResources().getString(R.string.yes), (dialog, cl) -> {
-                        BearPicture newPicture = new BearPicture(Integer.valueOf(height),Integer.valueOf(width));
+                        BearPicture newPicture = new BearPicture(Integer.valueOf(height),Integer.valueOf(width),getCurrentTimeStamp());
                         Executor thread1 = Executors.newSingleThreadExecutor();
                         pictures.add(newPicture);
 
@@ -183,7 +202,7 @@ public class BearActivity extends AppCompatActivity {
                         myAdapter.notifyDataSetChanged();
                         binding.recyclerView2.scrollToPosition(pictures.size()-1);
                         try {
-                            image.compress(Bitmap.CompressFormat.PNG, 100, BearActivity.this.openFileOutput(bearPic + ".png", Activity.MODE_PRIVATE));
+                            image.compress(Bitmap.CompressFormat.PNG, 100, BearActivity.this.openFileOutput(bearPic + "_" + getCurrentTimeStamp() + ".png", Activity.MODE_PRIVATE));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -232,7 +251,7 @@ public class BearActivity extends AppCompatActivity {
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
 
                 BearPicture picture = pictures.get(position);
-                String files= new File(context.getFilesDir(), picture.getWidth() + "-" + picture.getHeight() + ".png").getPath();
+                String files= new File(context.getFilesDir(), picture.getWidth() + "-" + picture.getHeight() + "_" + picture.getTimeDownloaded() + ".png").getPath();
                 Bitmap newImage = BitmapFactory.decodeFile(files);
                 holder.imgView.setImageBitmap(newImage);
 
@@ -279,7 +298,7 @@ public class BearActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.delete) {
             AlertDialog.Builder builder = new AlertDialog.Builder( BearActivity.this );
             builder.setMessage(String.format(getResources().getString(R.string.ask_delete)))
-                    .setTitle(String.format(getResources().getString(R.string.question)))
+                    .setTitle(String.format(getResources().getString(R.string.question_title)))
                     .setNegativeButton(String.format(getResources().getString(R.string.no)), (dialog,cl) ->{})
                     .setPositiveButton(String.format(getResources().getString(R.string.yes)), (dialog,cl) ->{
                         BearPicture m = pictures.get(position);
@@ -308,7 +327,8 @@ public class BearActivity extends AppCompatActivity {
                  BearPicture selected = BearActivity.pictures.get(BearActivity.position);
                  BearActivity.pictureModel.selectedPicture.postValue(selected);
 
-                    });
+
+            });
 
         }
 
