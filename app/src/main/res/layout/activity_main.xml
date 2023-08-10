@@ -7,43 +7,56 @@
     tools:context=".MainActivity">
 
 
-    <Button
+    <ImageButton
         android:id="@+id/aviation_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:src="@drawable/aviation_tracker_img"
         android:text="@string/button_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+
+    <ImageButton
         android:id="@+id/currency_button"
-        android:layout_width="232dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="50dp"
+        android:background="@null"
+        android:src="@drawable/currency_converator_image"
         android:text="@string/button2_message"
+        app:layout_constraintBottom_toTopOf="@+id/bear_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aviation_button" />
 
-    <Button
+    <ImageButton
         android:id="@+id/trivia_button"
-        android:layout_width="232dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="200dp"
+        android:background="@null"
+        android:src="@drawable/trivia_generator"
         android:text="@string/button3_message"
+        app:layout_constraintBottom_toTopOf="@+id/bear_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currency_button" />
+        app:layout_constraintTop_toBottomOf="@+id/aviation_button" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bear_button"
-        android:layout_width="232dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="10dp"
+        android:background="@null"
+        android:src="@drawable/bear_generator_icon"
         android:text="@string/button4_message"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trivia_button" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,8 +5,19 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
+/**
+ * ViewModel class for the Aviation Tracker application.
+ */
 public class AviationTrackerViewModel extends ViewModel {
-    public MutableLiveData<ArrayList<FlightRequest>> requests = new MutableLiveData<>();
-    public MutableLiveData<FlightRequest> selectedRequest = new MutableLiveData< >();
 
+    /**
+     * MutableLiveData holding an ArrayList of flight request objects.
+     */
+    public MutableLiveData<ArrayList<FlightRequest>> requests = new MutableLiveData<>();
+
+    /**
+     * MutableLiveData holding a selected flight request object.
+     */
+    public MutableLiveData<FlightRequest> selectedRequest = new MutableLiveData<>();
 }
+

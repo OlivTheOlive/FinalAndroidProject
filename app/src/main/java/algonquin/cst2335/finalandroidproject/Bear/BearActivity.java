@@ -77,9 +77,6 @@ public class BearActivity extends AppCompatActivity {
     BearPictureDAO myDAO;
     static int position;
     Context context = this;
-
-    FrameLayout frame;
-
     public static ArrayList<BearPicture> pictures;
 
 
