@@ -4,14 +4,9 @@ import static algonquin.cst2335.finalandroidproject.Bear.BearActivity.pictures;
 import static algonquin.cst2335.finalandroidproject.Bear.BearActivity.position;
 
 import android.app.AlertDialog;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +16,6 @@ import android.widget.TextView;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
-
 import java.io.File;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -30,13 +24,26 @@ import algonquin.cst2335.finalandroidproject.Bear.Data.BearPicture;
 import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.PictureDetailsFragmentBinding;
 
+/**
+ * Fragment class responsible for displaying detailed information about a selected BearPicture.
+ */
 public class PictureDetailsFragment extends Fragment {
 
+    /**
+     * The selecteed BearPicture Object
+     */
     BearPicture selected;
+    /**
+     * the filename of the BearPicture
+     */
     TextView fileName;
-    PictureDetailsFragment context = this;
 
 
+    /**
+     * Creates a new instance of PictureDetailsFragment with the selected BearPicture Object
+     *
+     * @param bp the selected BearPicture
+     */
     public PictureDetailsFragment(BearPicture bp){
         selected = bp;
     }
