@@ -36,14 +36,14 @@
     <string name="about">How to</string>
 
     <string name="bear_title">Generate Bear Image</string>
-    <string name="question">Question:</string>
+    <string name="question_title">Question:</string>
     <string name="do_save">Do you want to save this image?</string>
     <string name="height">Height</string>
     <string name="width">Width</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="img_save">Image Saved</string>
-    <string name="bear_help">Enter desired height and with then generate bear image. Click on the image to save it to your device.</string>
+    <string name="bear_help">  Enter desired height and with then generate bear image. \n\nClick on the image to save it to your device. \n\nClick on an image at the bottom to see  more information.</string>
     <string name="help">HELP</string>
     <string name="done">Done</string>
     <string name="bear_size">Bear Image Size: </string>

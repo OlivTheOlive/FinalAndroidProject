@@ -17,13 +17,25 @@ public class BearPicture {
     @ColumnInfo(name = "width")
     int width;
 
+    public String getTimeDownloaded() {
+        return timeDownloaded;
+    }
+
+    public void setTimeDownloaded(String timeDownloaded) {
+        this.timeDownloaded = timeDownloaded;
+    }
+
+    @ColumnInfo(name = "timeDownloaded")
+    String timeDownloaded;
+
     public BearPicture(){
 
     }
 
-    public BearPicture(Integer h, Integer w){
+    public BearPicture(Integer h, Integer w, String t){
         height = h;
         width = w;
+        timeDownloaded = t;
     }
 
     public int getHeight() {

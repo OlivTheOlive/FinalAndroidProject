@@ -70,7 +70,7 @@ import algonquin.cst2335.finalandroidproject.databinding.ScoreItemBinding;
 public class TriviaActivity extends AppCompatActivity {
     ArrayList<QuestionObj> getQuestions;
     static QuizActivityViewModel quizModel;
-    private ScoreAdapter scoreAdapter;
+    private ScoreAdapter scoreAdapterz;
     SharedPreferences sharedPreferences;
     public static QuizQuestionDAO quizQuestionDAO;
     private List<Score> scores;
