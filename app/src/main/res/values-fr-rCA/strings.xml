@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Les laboratoires Android de Fayz</string>
+    <string name="app_name">Projet Final</string>
     <string name="button_message">Suivi de vol de pile d\'aviation</string>
     <string name="button2_message">Base de données de questions triviales</string>
     <string name="button3_message">Trivia Question Database</string>
@@ -9,9 +9,6 @@
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
 
-    <string name="txt_edit1">Entrer le montant</string>
-    <string name="dCurrency">effacer</string>
-    <string name="about">Comment utiliser</string>
 
 
     <string name="score_text_view">Pointage</string>
@@ -31,19 +28,6 @@
     <string name="question1">La Question Va Ici</string>
     <string name="answer">La réponse va ici</string>
 
-    <string name="get_flight_btn">Obtenir données</string>
-    <string name="edit_aviation">code 3 lettres svp</string>
-    <string name="save">Enregistrer</string>
-    <string name="flightDet">Les détails du vol:</string>
-    <string name="AirportCode">"Code de l'aéroport : "</string>
-    <string name="flightNum">"Vol #: "</string>
-    <string name="delayTime">"Retard: "</string>
-    <string name="statusString">"État : "</string>
-    <string name="gateNum">"Portail #: "</string>
-    <string name="terminalNum">"Terminal #: "</string>
-    <string name="arrivalAirport">"Aéroport d'arrivée: "</string>
-    <string name="airlineName">Nom de la compagnie :</string>
-    <string name="saveState">Non enregistré</string>
 
 
 
@@ -52,27 +36,11 @@
     <string name="about">Comment utiliser</string>
 
 
-    <string name="score_text_view">Pointage</string>
-    <string name="leaderBoard">Voir le tableau des leaders</string>
-    <string name="qstion">Question</string>
-    <string name="player_name">Nom du joueur</string>
-    <string name="score">Pointage</string>
-    <string name="category">Catégorie</string>
-    <string name="id">Id</string>
-    <string name="delete_button">supprimer</string>
-    <string name="strtquiz">Démarrer le quiz?</string>
-    <string name="usrname">Nom d’utilisateur</string>
-    <string name="question">Sélectionner le nombre de questions</string>
-    <string name="geographyButton">Générer une question géographique</string>
-    <string name="animalButton">Générer une question animale</string>
-    <string name="quizDoneButton">Soumettez des réponses!</string>
-    <string name="question1">La Question Va Ici</string>
-    <string name="answer">La réponse va ici</string>
 
     <string name="get_flight_btn">Obtenir données</string>
     <string name="edit_aviation">code 3 lettres svp</string>
     <string name="save">Enregistrer</string>
-    <string name="flightDet">Les détails du vol:</string>
+    <string name="flightDet">Les détails:</string>
     <string name="AirportCode">"Code de l'aéroport : "</string>
     <string name="flightNum">"Vol #: "</string>
     <string name="delayTime">"Retard: "</string>
@@ -84,16 +52,6 @@
     <string name="saveState">Non enregistré</string>
 
 
-    <string name="do_save">Voulez-vous enregistrer cette image ?</string>
-    <string name="question">Question:</string>
-    <string name="no">Non</string>
-    <string name="yes">Oui</string>
-    <string name="img_save">Image enregistrée</string>
-    <string name="bear_help">Entrez la hauteur souhaitée et générez ensuite une image d\'ours. Cliquez sur l\'image pour l\'enregistrer sur votre appareil.</string>
-    <string name="help">AIDER</string>
-    <string name="done">Fait</string>
-    <string name="bear_size">Taille de l\'image de l\'ours: </string>
-    <string name="undo">Annuler</string>
 
     <string name="show_save">Afficher les images enregistrées</string>
     <string name="hide_save">Masquer les images enregistrées</string>
@@ -104,4 +62,22 @@
     <string name="frag_height">Hauteur: </string>
     <string name="frag_width">Largeur: </string>
     <string name="frag_file">Nom de fichier: </string>
+    <string name="AviationAbout">Qui!</string>
+    <string name="AviationHowTo">Comment!</string>
+    <string name="AviationAboutMessage">Version 1.0, créée par Olivie Bergeron</string>
+    <string name="AviationHowToMessage">Tapez simplement un code d\'aéroport pour obtenir vos données</string>
+    <string name="Okkii">Okkééé</string>
+    <string name="showSave_Aviation">Enregister</string>
+    <string name="codeCheck">Vérification du code Checked</string>
+    <string name="codeCheckNegative">Le code n\'est pas valide, 3 lettres s\'il vous plaît</string>
+    <string name="dataSetQestionSave">Voulez-vous enregistrer l\'ensemble de données :</string>
+    <string name="doYouSave">Sauvegarder</string>
+    <string name="youSaved">Vous avez enregistré l\'ensemble de données #</string>
+    <string name="doYouDelete">Supprimez-vous cet ensemble de données :</string>
+    <string name="youDelete">Vous avez effacer #</string>
+    <string name="undoAviation">annuler</string>
+    <string name="keepAviation">Garder</string>
+    <string name="dataSetNum">"Dase de données# "</string>
+    <string name="alreadySaveAv">" Deja Sauvé"</string>
+    <string name="apiCrash">Api s\'est encore écrasé lol</string>
 </resources>
