@@ -431,8 +431,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
 
                         Snackbar.make( binding.convert, "You deleted message #" + position, Snackbar.LENGTH_LONG)
                                 .setAction("Undo", (click)-> {
-                                    /*conversionResultsList.add(position, currencyRemove);
-                                    myAdapter.notifyItemInserted(position);*/
 
                                     Executor thread2 = Executors.newSingleThreadExecutor();
                                     thread2.execute(() -> {
@@ -445,12 +443,6 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                     })
                     .create().show();
 
-
-                       /* // Pass the selected item to CurrencyHistory activity
-                        currencyViewModel.setSelectedAmount(selected);
-                        Intent nextPage = new Intent(CurrencyConverterActivity.this);
-                        startActivity(nextPage);*/
-
         }else if (item.getItemId() == R.id.about){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(CurrencyConverterActivity.this);
@@ -460,9 +452,7 @@ public class CurrencyConverterActivity extends AppCompatActivity implements Adap
                     .setPositiveButton("Ok", (dialog, clk) -> {
                     }).create().show();
         } else if (item.getItemId() == R.id.history){
-            /*
-            Intent nextPage = new Intent(this, CurrencyHistory.class);
-            startActivity(nextPage);*/
+
             binding.recyclerView.setVisibility(View.VISIBLE);
 
         } else if (item.getItemId() == R.id.plane){
