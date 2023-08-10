@@ -1,6 +1,7 @@
 package algonquin.cst2335.finalandroidproject.Trivia;
 
 import static algonquin.cst2335.finalandroidproject.Trivia.TriviaActivity.quizQuestionDAO;
+import static algonquin.cst2335.finalandroidproject.Trivia.TriviaActivity.scoreArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,13 +27,28 @@ import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.ActivityLeaderBoardBinding;
 import algonquin.cst2335.finalandroidproject.databinding.ScoreItemBinding;
 
+/**
+ * Activity to display the leader board for the trivia game.
+ * <p>
+ * This activity showcases the top scores of the trivia game in a RecyclerView. Each score is an instance
+ * of the {@link Score} class and is presented in a list format. The scores can be clicked to view
+ * more details, although that functionality appears to be commented out in this version.
+ * </p>
+ */
 public class LeaderBoardActivity extends AppCompatActivity {
 
+    /** ViewModel to interact with quiz data. */
     private QuizActivityViewModel quizModel;
+
+    /** RecyclerView to display the list of scores. */
     private RecyclerView recyclerView;
+
+    /** List of scores to be displayed in the leader board. */
     private ArrayList<Score> scores;
+
+    /** Binding instance for the activity layout. */
     private ActivityLeaderBoardBinding binding;
-    private ScoreItemBinding variableBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,17 +75,26 @@ public class LeaderBoardActivity extends AppCompatActivity {
         TriviaActivity.ScoreAdapter adapter = new TriviaActivity.ScoreAdapter(this, scores);
         recyclerView.setAdapter(adapter);
 
-        quizModel.selectedScore.observe(this, (newValue) -> {
-            ScoresFragment leaderBoardFragment = new ScoresFragment((Score) newValue);
-            FragmentManager fMgr = getSupportFragmentManager();
-            FragmentTransaction tx = fMgr.beginTransaction();
-            tx.replace(R.id.fragment_container,  leaderBoardFragment);
-            tx.addToBackStack("");
-            tx.commit();
+        recyclerView.setOnClickListener(view -> {
+
         });
 
+    }
 
 
+
+
+    /**
+     * Overrides the default back button behavior. If there are fragments on the back stack,
+     * it will pop the last fragment. Otherwise, the super method is called.
+     */
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
 
