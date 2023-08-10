@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Projet Final</string>
+
+    <string name="app_name">Projet final</string>
+
     <string name="button_message">Suivi de vol de pile d\'aviation</string>
     <string name="button2_message">Base de données de questions triviales</string>
-    <string name="button3_message">Trivia Question Database</string>
+    <string name="button3_message">Base de données de questions de trivia</string>
     <string name="button4_message">Générer une image d\'ours</string>
+
+    <string name="welcomeMessage">"Bienvenue au jeu-questionnaire! Sélectionnez un type de question pour les anecdotes et choisissez un nombre parmi 1 à 50 questions. Appuyez sur les différentes icônes en haut à droite pour accéder aux applications affichées."</string>
+    <string name="bear_title">Generate Bear Image</string>
+    <string name="geographyQuestions">Nombre de questions sur la géographie générées :</string>
+    <string name="animalQuestions">Nombre de questions sur les animaux générées : </string>
     <string name="bear_title">Générer une image d\'ours</string>
+
     <string name="height">Hauteur</string>
     <string name="width">Largeur</string>
 
@@ -28,6 +36,10 @@
     <string name="score">Pointage</string>
     <string name="category">Catégorie</string>
     <string name="id">Id</string>
+
+    <string name="delete_button">supprimer</string>
+    <string name="leaderboard_title">Meilleurs 10 scores!</string>
+
     <string name="strtquiz">Démarrer le quiz?</string>
     <string name="usrname">Nom d’utilisateur</string>
     <string name="geographyButton">Générer une question géographique</string>

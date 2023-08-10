@@ -102,29 +102,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.477" />
 
-    <Button
-        android:id="@+id/leaderBoard"
-        android:layout_width="294dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="56dp"
-        android:text="@string/leaderBoard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/animalButton"
-        app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toStartOf="@+id/animalButton"
-        app:layout_constraintTop_toBottomOf="@+id/animalButton" />
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="410dp"
-        android:layout_height="724dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/myToolbar"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
-
-    </FrameLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
