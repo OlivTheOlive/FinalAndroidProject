@@ -7,45 +7,20 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ViewModel class that provides data related to currency conversion history and selected amounts.
+ */
 public class CurrencyViewModel extends ViewModel {
 
+    private CurrencyDAO currencyDAO;
+    /**
+     * LiveData representing the list of currency conversion results.
+     */
     public MutableLiveData<ArrayList<CurrencySelected>> conversionResultsList = new MutableLiveData<>();
+    /**
+     * LiveData representing the selected currency conversion amount.
+     */
     public MutableLiveData<CurrencySelected> selectedAmount = new MutableLiveData<>();
 
-   /* public MutableLiveData<ArrayList<CurrencySelected>> getConversionResultsList() {
-        return conversionResultsList;
-    }*/
 
-   /* public void setConversionResultsList(ArrayList<CurrencySelected> list) {
-        conversionResultsList.setValue(list);
-    }*/
-
-    public MutableLiveData<CurrencySelected> getSelectedAmount() {
-        return selectedAmount;
-    }
-
-    public void setSelectedAmount(CurrencySelected amount) {
-        selectedAmount.setValue(amount);
-    }
-
-    private CurrencyDAO currencyDAO;
-
-    public CurrencyViewModel(CurrencyDAO currencyDAO) {
-        this.currencyDAO = currencyDAO;
-    }
-
-   /* public List<CurrencySelected> getAllAmount() {
-        return currencyDAO.getAllAmount();
-    }*/
-
-    public void addConversionResult(CurrencySelected currencySelected) {
-        List<CurrencySelected> currentList = conversionResultsList.getValue();
-
-        if (currentList == null) {
-            currentList = new ArrayList<>();
-        }
-
-        currentList.add(currencySelected);
-        conversionResultsList.setValue((ArrayList<CurrencySelected>) currentList);
-    }
 }

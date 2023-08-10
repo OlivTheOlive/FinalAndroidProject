@@ -8,8 +8,10 @@
     tools:context=".Currency.CurrencyConverterActivity" >
 
   <FrameLayout
+      android:id="@+id/fragmentLocation"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="match_parent"
+      android:background="@color/white">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,11 +20,11 @@
 
       <TextView
           android:id="@+id/to"
-          android:textSize="20sp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="35dp"
           android:text="@string/to"
+          android:textSize="20sp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toEndOf="@+id/from"
           app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -30,12 +32,12 @@
 
       <TextView
           android:id="@+id/from"
-          android:textSize="20sp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="80dp"
           android:layout_marginTop="35dp"
           android:text="@string/from"
+          android:textSize="20sp"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -53,7 +55,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginBottom="120dp"
-          android:text="CONVERT"
+          android:text="@string/currency_convert_button"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toEndOf="@+id/amountInput" />
@@ -61,9 +63,9 @@
       <Spinner
           android:id="@+id/currencyFrom"
           android:layout_width="wrap_content"
-          android:textSize="30sp"
           android:layout_height="wrap_content"
           android:layout_marginTop="35dp"
+          android:textSize="30sp"
           app:layout_constraintStart_toStartOf="@+id/from"
           app:layout_constraintTop_toBottomOf="@+id/from" />
 
@@ -71,8 +73,8 @@
           android:id="@+id/currencyTo"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textSize="30sp"
           android:layout_marginTop="35dp"
+          android:textSize="30sp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toEndOf="@+id/currencyFrom"
           app:layout_constraintTop_toBottomOf="@+id/to" />
@@ -82,8 +84,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="180dp"
+          android:text="@string/currency_amount"
           android:textSize="25sp"
-          android:text="@string/amount"
           app:layout_constraintEnd_toEndOf="@+id/currencyTo"
           app:layout_constraintStart_toStartOf="@+id/currencyFrom"
           app:layout_constraintTop_toBottomOf="@+id/currencyFrom" />
@@ -93,24 +95,35 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="10dp"
-          android:text="Currency"
           android:textSize="30sp"
+          android:text="@string/currency_title"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/currencyToolbar" />
 
       <EditText
           android:id="@+id/amountInput"
-          android:textSize="20sp"
-          android:hint="Enter amount"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="16dp"
           android:layout_marginBottom="120dp"
           android:ems="10"
+          android:hint="@string/currency_hint"
           android:inputType="number"
+          android:textSize="20sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintStart_toStartOf="parent" />
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recyclerView"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:background="@color/white"
+          android:visibility="invisible"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/currencyToolbar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

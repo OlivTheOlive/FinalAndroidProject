@@ -29,15 +29,6 @@
     <string name="frag_category">Player Category Goes Here</string>
     <string name="delete_button">Delete</string>
     <string name="answer">Answer Goes Here</string>
-    <string name="txt1">CAD</string>
-    <string name="txt2">FF</string>
-    <string name="txt3">PHP</string>
-
-    <string name="txt_edit1">Enter Amount</string>
-    <string name="CAD">CAD</string>
-    <string name="FF">FF</string>
-    <string name="dCurrency">Delete</string>
-    <string name="about">How to</string>
 
     <string name="bear_title">Generate Bear Image</string>
 
@@ -66,21 +57,28 @@
     <string name="get_flight_btn">Get Data</string>
     <string name="edit_aviation">3 letter code pls</string>
 
-
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="currency_convert_button">CONVERT</string>
+    <string name="currency_title">Currency</string>
+    <string name="currency_history">History</string>
+    <string name="currency_txt_edit1">Enter Amount</string>
+    <string name="dCurrency">Delete</string>
+    <string name="currency_about">How to</string>
+    <string name="currency_hint">Enter Amount</string>
 
-    <string name="amount">Please Enter Amount</string>
-
+    <string name="currency_amount">Please Enter Amount</string>
 
     <string-array name="country1">
         <item>CAD</item>
         <item>PHP</item>
         <item>EUR</item>
         <item>INR</item>
+        <item>INR</item>
         <item>AED</item>
         <item>KGS</item>
         <item>MAD</item>
+        <item>JPY</item>
         <item>JPY</item>
     </string-array>
 

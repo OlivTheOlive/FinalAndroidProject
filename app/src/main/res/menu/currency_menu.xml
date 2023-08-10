@@ -27,9 +27,9 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/about"
-        android:title="@string/about" />
+        android:title="@string/currency_about" />
     <item
         android:id="@+id/history"
-        android:title="History"
+        android:title="@string/currency_history"
         app:showAsAction="never" />
 </menu>

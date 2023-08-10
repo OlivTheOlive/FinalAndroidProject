@@ -45,12 +45,14 @@
     <string name="geographyButton">Générer une question géographique</string>
     <string name="animalButton">Générer une question animale</string>
     <string name="quizDoneButton">Soumettez des réponses!</string>
+    <string name="convert_button">Convertir</string>
     <string name="question1">La Question Va Ici</string>
     <string name="answer">La réponse va ici</string>
 
 
     <string name="get_flight_btn">Obtenir données</string>
     <string name="edit_aviation">code 3 lettres svp</string>
+    <string name="amount">Veuillez entrer le montant</string>
     <string name="save">Enregistrer</string>
     <string name="flightDet">Les détails:</string>
     <string name="AirportCode">"Code de l'aéroport : "</string>
@@ -62,6 +64,9 @@
     <string name="arrivalAirport">"Aéroport d'arrivée: "</string>
     <string name="airlineName">Nom de la compagnie :</string>
     <string name="saveState">Non enregistré</string>
+
+    <string name="from">De</string>
+    <string name="to">A</string>
 
 
 
