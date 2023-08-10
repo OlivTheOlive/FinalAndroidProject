@@ -14,10 +14,20 @@ import androidx.fragment.app.DialogFragment;
 import algonquin.cst2335.finalandroidproject.R;
 import algonquin.cst2335.finalandroidproject.databinding.AviationDetailsBinding;
 
+/**
+ * A DialogFragment class for displaying details of a flight request.
+ */
 public class FlightRequestDetails extends DialogFragment {
-
+    /**
+     * The selected flight request object to display details for.
+     */
     private FlightRequest selected;
 
+    /**
+     * Constructs a FlightRequestDetails instance with the given flight request.
+     *
+     * @param newValue The flight request object for which to display details.
+     */
     public FlightRequestDetails(FlightRequest newValue) {
         selected = newValue;
     }
@@ -26,9 +36,8 @@ public class FlightRequestDetails extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AviationDetailsBinding binding = AviationDetailsBinding.inflate(LayoutInflater.from(getContext()));
-        Dialog dialog = new Dialog(requireContext()); // Use your custom dialog style here
+        Dialog dialog = new Dialog(requireContext());
 
-        // Set the binding's root view to be non-focusable and non-clickable
         binding.getRoot().setEnabled(false);
         binding.flightNumID.setText("");
         binding.delayNumID.setText("");
@@ -54,8 +63,8 @@ public class FlightRequestDetails extends DialogFragment {
     public void onStart() {
         super.onStart();
         if (getDialog() != null) {
-            getDialog().setCancelable(true); // Make the dialog non-cancelable
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent); // Make the dialog background transparent
+            getDialog().setCancelable(true);
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
 }

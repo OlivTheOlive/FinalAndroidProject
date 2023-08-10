@@ -46,6 +46,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           tools:ignore="MissingConstraints"
+          android:background="?attr/colorPrimary"
           tools:layout_editor_absoluteX="1dp"
           tools:layout_editor_absoluteY="0dp" />
 

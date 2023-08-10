@@ -2,6 +2,8 @@ package algonquin.cst2335.finalandroidproject.Bear;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,7 +27,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,73 +63,25 @@ import algonquin.cst2335.finalandroidproject.databinding.ActivityBearBinding;
 
 public class BearActivity extends AppCompatActivity {
 
-    /**
-     * The binding for the activity_bear layout
-     */
     ActivityBearBinding binding;
 
-    /**
-     * the snackbar message
-     */
     TextView messageText;
-
-    /**
-     * The volley request queue
-     */
     RequestQueue queue = null;
 
-    /**
-     * the height of the bear image
-     */
     protected String height;
-    /**
-     * the width of the bear image
-     */
     protected String width;
 
-    /**
-     * The view model to store picture data
-     */
     static BearPictureViewModel pictureModel;
-
-    /**
-     * the bear picture name
-     */
     String bearPic;
-
-    /**
-     * the bitmap of the bear to display on the screen
-     */
     Bitmap image;
-    /**
-     * the database object
-     */
     BearPictureDAO myDAO;
-    /**
-     * store the posiiton of the adapter
-     */
     static int position;
-    /**
-     * Sets the context to this object
-     */
     Context context = this;
-
-    /**
-     * the arraylist to store bear pictures
-     */
     public static ArrayList<BearPicture> pictures;
 
 
-    /**
-     * The adapter for the recycler view
-     */
     RecyclerView.Adapter myAdapter;
 
-    /**
-     * Gets the current date and time
-     *
-     * @return the formatted current date and time
-     */
     private String getCurrentTimeStamp(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyy_hh:mm:ss");
         return sdf.format(new Date());
@@ -358,13 +314,7 @@ public class BearActivity extends AppCompatActivity {
     }
 }
 
-/**
- * ViewHolder class for managing individual items within a RecyclerView.
- */
-class MyRowHolder extends RecyclerView.ViewHolder {
-    /**
-     * Image view to display bear picture
-     */
+    class MyRowHolder extends RecyclerView.ViewHolder {
     ImageView imgView;
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
