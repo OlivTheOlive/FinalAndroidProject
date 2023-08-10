@@ -358,7 +358,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
                 if (!m.getSaveID().equals("Saved") && isFlightIdUnique(m.getFlightID())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
-                    builder.setTitle(String.format(getResources().getString(R.string.questionBear)))
+                    builder.setTitle(String.format(getResources().getString(R.string.question_title)))
                             .setMessage(String.format(getResources().getString(R.string.dataSetQestionSave)) + flightId.getText())
                             .setNegativeButton(String.format(getResources().getString(R.string.doYouSave)), (dialog, cl) -> {
                                 if (!m.getSaveID().equals("Saved")) {
@@ -385,7 +385,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
-                    builder.setTitle(String.format(getResources().getString(R.string.questionBear)))
+                    builder.setTitle(String.format(getResources().getString(R.string.question_title)))
                             .setMessage(String.format(getResources().getString(R.string.doYouDelete)) + flightId.getText())
                             .setNegativeButton(String.format(getResources().getString(R.string.keepAviation)),((dialog, which) -> {}))
                             .setPositiveButton(String.format(getResources().getString(R.string.delete_button)), (dialog, cl) -> {
