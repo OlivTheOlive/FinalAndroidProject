@@ -3,6 +3,9 @@
     <string name="button_message">Aviation Stack Flight Tracker</string>
     <string name="button2_message">Currency Converter</string>
     <string name="button3_message">Trivia Question Database</string>
+    <string name="welcomeMessage">Welcome to the trivia game! Select a type of question for the trivia and pick a number from 1-50 questions. Tap on the different icons on the top right to navigate to the apps shown.</string>
+    <string name="geographyQuestions">Number of geography questions generated: </string>
+    <string name="animalQuestions">Number of animal questions generated: </string>
     <string name="button4_message">Bear Image Generator</string>
 
     <string name="score_text_view">Score</string>
@@ -19,6 +22,7 @@
     <string name="animalButton">Generate Animal Question</string>
     <string name="quizDoneButton">Submit Answers!</string>
     <string name="convert_button">Convert</string>
+    <string name="leaderboard_title">Top 10 Scores!</string>
     <string name="question1">Question Goes Here</string>
     <string name="frag_player_name">Player Name Goes Here</string>
     <string name="frag_score">Player Score Goes Here</string>
@@ -27,8 +31,29 @@
     <string name="answer">Answer Goes Here</string>
 
     <string name="bear_title">Generate Bear Image</string>
+
+    <string name="question_title">Question:</string>
+
+    <string name="do_save">Do you want to save this image?</string>
     <string name="height">Height</string>
     <string name="width">Width</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="img_save">Image Saved</string>
+    <string name="bear_help">  Enter desired height and with then generate bear image. \n\nClick on the image to save it to your device. \n\nClick on an image at the bottom to see  more information.</string>
+    <string name="help">HELP</string>
+    <string name="done">Done</string>
+    <string name="bear_size">Bear Image Size: </string>
+    <string name="undo">Undo</string>
+    <string name="show_save">Show Saved Images</string>
+    <string name="hide_save">Hide Saved Images</string>
+    <string name="ask_delete">Do you want to delete this message?</string>
+    <string name="place_height">HEIGHT GOES HERE</string>
+    <string name="place_width">WIDTH GOES HERE</string>
+    <string name="place_file">FILE NAME GOES HERE</string>
+    <string name="frag_height">Height: </string>
+    <string name="frag_width">Width: </string>
+    <string name="frag_file">File Name: </string>
     <string name="get_flight_btn">Get Data</string>
     <string name="edit_aviation">3 letter code pls</string>
 
@@ -85,5 +110,19 @@
     <string name="AviationAboutMessage">Version 1.0, created by Olivie Bergeron</string>
     <string name="AviationHowToMessage">Just type an airport code to get your data</string>
     <string name="Okkii">Okkii</string>
+    <string name="showSave_Aviation">Show Saved</string>
+    <string name="codeCheck">Code checks out</string>
+    <string name="codeCheckNegative">Code is not valid, 3 letters please</string>
+    <string name="dataSetQestionSave">Do you want save the dataset: </string>
+    <string name="doYouSave">Save</string>
+    <string name="youSaved">You saved dataset #</string>
+    <string name="doYouDelete">Do you delete this dataset: </string>
+    <string name="youDelete">You deleted dataset #</string>
+    <string name="undoAviation">Undo</string>
+    <string name="keepAviation">Keep</string>
+    <string name="dataSetNum">Dataset #</string>
+    <string name="alreadySaveAv"> already saved</string>
+    <string name="apiCrash">Api Crashed again lol</string>
+
 
 </resources>

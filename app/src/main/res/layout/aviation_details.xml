@@ -94,7 +94,7 @@
                     android:id="@+id/detFlightID"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/AirportCode"
+                    android:text="@string/flightNum"
                     android:textSize="16dp" />
 
                 <TextView

@@ -101,7 +101,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
             String message = String.format(getResources().getString(R.string.Okkii));
             AlertDialog.Builder builder2 = new AlertDialog.Builder(AviationTrackerActivity.this);
             builder2.setTitle(howTo)
-                    .setMessage("Just type an airport code to get your data")
+                    .setMessage(howToMess)
                     .setPositiveButton(message, (dialog, cl) -> {
                     })
                     .create().show();
@@ -147,17 +147,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
         binding.editTextText.setText(savedCode);
 
 
-
-
-//        ATViewModel.selectedRequest.observe(this, (newValue) -> {
-//
-//            FragmentManager fMgr = getSupportFragmentManager();
-//            FragmentTransaction tx = fMgr.beginTransaction();
-//            FlightRequestDetails mdf = new FlightRequestDetails(newValue);
-//            tx.replace(R.id.fragLocation, mdf);
-//            tx.addToBackStack("");
-//            tx.commit();
-//        });
         ATViewModel.selectedRequest.observe(this, (newValue) -> {
             FlightRequestDetails dialogFragment = new FlightRequestDetails(newValue);
             dialogFragment.show(getSupportFragmentManager(), "FlightRequestDetailsDialog");
@@ -235,7 +224,7 @@ public class AviationTrackerActivity extends AppCompatActivity {
                         error -> {
                             // Step 11: Handle API call error, show a toast message
                             int duration = Toast.LENGTH_SHORT;
-                            Toast.makeText(this, "Api crashed again lol", duration).show();
+                            Toast.makeText(this, String.format(getResources().getString(R.string.apiCrash)), duration).show();
                             error.printStackTrace();
 
                         });
@@ -288,13 +277,18 @@ public class AviationTrackerActivity extends AppCompatActivity {
     }
 
 
-    //if the amount of capital letters do not match the length, show error in typed code.
+    /**
+     * Checks if the typed code is valid by verifying its length and the number of capital letters.
+     *
+     * @param cd The typed code to check
+     * @return True if the code is valid, false otherwise
+     */
     boolean checkCode(@NonNull String cd) {
         int duration = Toast.LENGTH_SHORT;
         int counter = 0;
         char c;
         if (cd.length() != 3) {
-            Toast.makeText(this, "Code is not valid, 3 letters please", duration).show();
+            Toast.makeText(this, String.format(getResources().getString(R.string.codeCheckNegative)), duration).show();
             return false;
         } else {
             for (int i = 0; i < cd.length(); i++) {
@@ -305,13 +299,20 @@ public class AviationTrackerActivity extends AppCompatActivity {
             }
         }
         if(cd.length() - counter == 3){
-            Toast.makeText(this, "Code checks out", duration).show();
+            Toast.makeText(this, String.format(getResources().getString(R.string.codeCheck)), duration).show();
             return true;
         }else {
-            Toast.makeText(this, "Code is not valid, 3 letters please", duration).show();
+            Toast.makeText(this, String.format(getResources().getString(R.string.codeCheckNegative)), duration).show();
             return false;
         }
     }
+
+    /**
+     * Checks if a flight request is a duplicate based on the code and flight ID.
+     *
+     * @param newReq The new flight request to check for duplicates
+     * @return True if the flight request is a duplicate, false otherwise
+     */
     private boolean isDuplicateFlight(FlightRequest newReq) {
         for (FlightRequest request : requests) {
             if (request.getCode().equals(newReq.getCode()) && request.getFlightID().equals(newReq.getFlightID())) {
@@ -321,7 +322,9 @@ public class AviationTrackerActivity extends AppCompatActivity {
         return false; // No duplicates found
     }
 
-
+    /**
+     * ViewHolder class for RecyclerView items.
+     */
     class MyRowHolder extends RecyclerView.ViewHolder {
         TextView code, flightId, saveID, airlineName, ArrivalAirport,departureAirport, detDate, detFlightID, detStatus;
 
@@ -355,25 +358,25 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
                 if (!m.getSaveID().equals("Saved") && isFlightIdUnique(m.getFlightID())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
-                    builder.setTitle("Question:")
-                            .setMessage("Do you save the dataset: " + flightId.getText())
-                            .setNegativeButton("Save", (dialog, cl) -> {
+                    builder.setTitle(String.format(getResources().getString(R.string.questionBear)))
+                            .setMessage(String.format(getResources().getString(R.string.dataSetQestionSave)) + flightId.getText())
+                            .setNegativeButton(String.format(getResources().getString(R.string.doYouSave)), (dialog, cl) -> {
                                 if (!m.getSaveID().equals("Saved")) {
-                                    m.setSaveID(String.format(getResources().getString(R.string.save)));
+                                    m.setSaveID("Saved");
                                     FlightRequest deletedItem = requests.get(position);
                                     myAdapter.notifyItemChanged(position); // Refresh the item view at the given position
                                     Executor thread = Executors.newSingleThreadExecutor();
                                     thread.execute(() -> DAO.insertCode(m));
-                                    Snackbar.make(flightId, "You saved dataset #" + (position + 1), Snackbar.LENGTH_LONG)
-                                            .setAction("Undo", click -> {
+                                    Snackbar.make(flightId, String.format(getResources().getString(R.string.youSaved)) + (position + 1), Snackbar.LENGTH_LONG)
+                                            .setAction(String.format(getResources().getString(R.string.undoAviation)), click -> {
                                                 // Undo the "Save" action
-                                                m.setSaveID(String.format(getResources().getString(R.string.saveState)));
+                                                m.setSaveID("Saved");
                                                 requests.add(position, deletedItem);
                                                 myAdapter.notifyItemInserted(position);
                                             })
                                             .show();
                                 } else {
-                                    Snackbar.make(flightId, "Dataset #" + (position + 1) + " already saved", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(flightId,  String.format(getResources().getString(R.string.dataSetNum))+ (position + 1) + String.format(getResources().getString(R.string.alreadySaveAv)), Snackbar.LENGTH_LONG)
                                             .show();
                                 }
                             })
@@ -382,10 +385,10 @@ public class AviationTrackerActivity extends AppCompatActivity {
 
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(AviationTrackerActivity.this);
-                    builder.setTitle("Question:")
-                            .setMessage("Do you delete this dataset: " + flightId.getText())
-                            .setNegativeButton("Keep",((dialog, which) -> {}))
-                            .setPositiveButton("Delete", (dialog, cl) -> {
+                    builder.setTitle(String.format(getResources().getString(R.string.questionBear)))
+                            .setMessage(String.format(getResources().getString(R.string.doYouDelete)) + flightId.getText())
+                            .setNegativeButton(String.format(getResources().getString(R.string.keepAviation)),((dialog, which) -> {}))
+                            .setPositiveButton(String.format(getResources().getString(R.string.delete_button)), (dialog, cl) -> {
                             Executor thread = Executors.newSingleThreadExecutor();
                             thread.execute(() -> DAO.deleteCode(m));
 
@@ -396,8 +399,8 @@ public class AviationTrackerActivity extends AppCompatActivity {
                             requests.remove(position);
                             myAdapter.notifyItemRemoved(position);
 
-                            Snackbar.make(flightId, "You deleted dataset #" + (position + 1), Snackbar.LENGTH_LONG)
-                                    .setAction("Undo", click -> {
+                            Snackbar.make(flightId, String.format(getResources().getString(R.string.youDelete))+ (position + 1), Snackbar.LENGTH_LONG)
+                                    .setAction(String.format(getResources().getString(R.string.undoAviation)), click -> {
                                         // Re-add the deleted item to the dataset and update the RecyclerView
                                         requests.add(position, deletedItem);
                                         myAdapter.notifyItemInserted(position);
@@ -418,16 +421,6 @@ public class AviationTrackerActivity extends AppCompatActivity {
             code= itemView.findViewById(R.id.airCodeID);
             flightId= itemView.findViewById(R.id.flighNum);
             saveID=itemView.findViewById(R.id.saveID);
-
-
-//            airlineName= itemView.findViewById(R.id.gateNumID);
-//            ArrivalAirport= itemView.findViewById(R.id.arrivalID);
-//            departureAirport= itemView.findViewById(R.id.delayNumID);
-//            detDate= itemView.findViewById(R.id.terminalNumID);
-//            detFlightID = itemView.findViewById(R.id.flightNumID);
-//            detStatus= itemView.findViewById(R.id.flightStatusID);
-
-
         }
 
 

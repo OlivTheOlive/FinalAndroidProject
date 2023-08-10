@@ -14,7 +14,9 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/bear_img"
+
         android:icon="@drawable/bear"
+
         android:title="Item"
         app:showAsAction="always" />
     <item
