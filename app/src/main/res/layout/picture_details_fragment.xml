@@ -34,7 +34,7 @@
         android:id="@+id/heightFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="456dp"
+        android:layout_marginTop="390dp"
         android:clickable="true"
         android:text="@string/place_height"
         android:textColor="@color/white"
