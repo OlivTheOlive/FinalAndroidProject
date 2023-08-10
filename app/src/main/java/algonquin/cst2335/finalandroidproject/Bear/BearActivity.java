@@ -185,7 +185,9 @@ public class BearActivity extends AppCompatActivity {
         binding.theBear.setOnClickListener(clk -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(BearActivity.this);
             builder.setMessage(String.format(getResources().getString(R.string.do_save)))
+
                     .setTitle(String.format(getResources().getString(R.string.question_title)))
+
                     .setNegativeButton(getResources().getString(R.string.no), (dialog, cl) -> {
                     })
                     .setPositiveButton(getResources().getString(R.string.yes), (dialog, cl) -> {

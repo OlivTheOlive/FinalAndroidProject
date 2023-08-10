@@ -36,7 +36,9 @@
     <string name="about">How to</string>
 
     <string name="bear_title">Generate Bear Image</string>
+
     <string name="question_title">Question:</string>
+
     <string name="do_save">Do you want to save this image?</string>
     <string name="height">Height</string>
     <string name="width">Width</string>
@@ -106,5 +108,19 @@
     <string name="AviationAboutMessage">Version 1.0, created by Olivie Bergeron</string>
     <string name="AviationHowToMessage">Just type an airport code to get your data</string>
     <string name="Okkii">Okkii</string>
+    <string name="showSave_Aviation">Show Saved</string>
+    <string name="codeCheck">Code checks out</string>
+    <string name="codeCheckNegative">Code is not valid, 3 letters please</string>
+    <string name="dataSetQestionSave">Do you want save the dataset: </string>
+    <string name="doYouSave">Save</string>
+    <string name="youSaved">You saved dataset #</string>
+    <string name="doYouDelete">Do you delete this dataset: </string>
+    <string name="youDelete">You deleted dataset #</string>
+    <string name="undoAviation">Undo</string>
+    <string name="keepAviation">Keep</string>
+    <string name="dataSetNum">Dataset #</string>
+    <string name="alreadySaveAv"> already saved</string>
+    <string name="apiCrash">Api Crashed again lol</string>
+
 
 </resources>
