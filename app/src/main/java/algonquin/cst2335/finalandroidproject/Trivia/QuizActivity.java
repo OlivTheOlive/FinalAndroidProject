@@ -83,7 +83,6 @@ public class QuizActivity extends AppCompatActivity {
         scoreTextView.setText("Score: " + score); // initial score
 
 
-
         recyclerView = binding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -114,9 +113,7 @@ public class QuizActivity extends AppCompatActivity {
                         // Insert the new score
                         quizQuestionDAO.insert(scoreObj);
 
-                        // For illustration, let's say you want to delete scores below a certain value
-                        int thresholdScore = 5;
-                        quizQuestionDAO.deleteScoresBelowValue(thresholdScore); // This DAO method needs to be defined
+
 
                         // Now fetch the top scores
                         List<Score> scores = quizQuestionDAO.getTopScores();
@@ -136,17 +133,11 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-                                                public void incrementScore() {
-                                                    this.score++;
-                                                    scoreTextView.setText("Score: " + this.score); // Update the TextView text
-                                                }
-                                            }
+    public void incrementScore() {
+        this.score++;
+        scoreTextView.setText("Score: " + this.score); // Update the TextView text
+    }
+}
 
 
-
-
-
-
-
-
-    // Display score method
+// Display score method
